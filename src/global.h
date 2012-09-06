@@ -5,7 +5,6 @@
 
 #include <QtCore/QtGlobal>
 
-
 #if defined(QSMPP_LIBRARY)
 #  define QSMPP_EXPORT Q_DECL_EXPORT
 #else
