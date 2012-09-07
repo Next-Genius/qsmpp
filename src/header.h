@@ -1,48 +1,50 @@
 #ifndef QSMPP_HEADER_H
 #define QSMPP_HEADER_H
 
+#include <constants.h>
+
 namespace qsmpp {
 namespace pdu {
 
 class QSMPP_EXPORT Header {
 public:
-  Header(const quint32 nCommandLength = 0,
-              const quint32 nCommandId = 0,
-              const quint32 nCommandStatus = 0,
-              const quint32 nSequenceNumber = 0);
+  Header(quint32 command_length = 0,
+              quint32 command_id = 0,
+              quint32 command_status = 0,
+              quint32 sequence_number = 0);
 
-  Header(const Header &);
+  Header(const Header &other);
 
-  bool operator ==(const Header &) const;
+  bool operator ==(const Header &other) const;
 
-  bool operator !=(const Header &) const;
+  bool operator !=(const Header &other) const;
 
-  Header &operator =(const Header &);
+  Header &operator =(const Header &other);
 
-  void setCommandLength(const quint32);
+  void setCommandLength(quint32 command_length);
 
-  const quint32 getCommandLength() const;
+  quint32 getCommandLength() const;
 
-  void setCommandId(const quint32);
+  void setCommandId(quint32 command_id);
 
-  const quint32 getCommandId() const;
+  quint32 getCommandId() const;
 
-  void setCommandStatus(const quint32);
+  void setCommandStatus(quint32 command_status);
 
-  const quint32 getCommandStatus() const;
+  quint32 getCommandStatus() const;
 
-  void setSequenceNumber(const quint32);
+  void setSequenceNumber(quint32 sequence_number);
 
-  const quint32 getSequenceNumber() const;
+  quint32 getSequenceNumber() const;
 
-  protected:
-  quint32 _CommandLength;
-  quint32 _CommandId;
-  quint32 _CommandStatus;
-  quint32 _SequenceNumber;
+protected:
+  quint32 command_length;
+  quint32 command_id;
+  quint32 command_status;
+  quint32 sequence_number;
 };
 
-}
-}
+} // namespace pdu
+} // namespace qsmpp
 
 #endif // QSMPP_HEADER_H

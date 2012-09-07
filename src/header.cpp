@@ -1,69 +1,80 @@
 #include <header.h>
 
-using namespace qsmpp::pdu;
+namespace qsmpp {
+namespace pdu {
 
-Header::Header(const quint32 nCommandLength,const quint32 nCommandId,
-const quint32 nCommandStatus, const quint32 nSequenceNumber):
-_CommandLength(nCommandLength),
-_CommandId(nCommandId),
-_CommandStatus(nCommandStatus),
-_SequenceNumber(nSequenceNumber){}
+Header::Header(
+  quint32 command_length,
+  quint32 command_id,
+  quint32 command_status,
+  quint32 sequence_number):
+    command_length(command_length),
+    command_id(command_id),
+    command_status(command_status),
+    sequence_number(sequence_number) {
 
-Header::Header(const Header &nHeader):
-_CommandLength(nHeader.getCommandLength()),
-_CommandId(nHeader.getCommandId()),
-_CommandStatus(nHeader.getCommandStatus()),
-_SequenceNumber(nHeader.getSequenceNumber()){}
-
-bool Header::operator ==(const Header &nHeader) const{
-    return ((_CommandLength == nHeader.getCommandLength())&&
-        (_CommandId == nHeader.getCommandId())&&
-        (_CommandStatus == nHeader.getCommandStatus())&&
-        (_SequenceNumber == nHeader.getSequenceNumber()));
 }
 
-bool Header::operator !=(const Header &nHeader) const{
-    return !operator ==(nHeader);
+Header::Header(const Header &other):
+  command_length(other.getCommandLength()),
+  command_id(other.getCommandId()),
+  command_status(other.getCommandStatus()),
+  sequence_number(other.getSequenceNumber()) {
+
 }
 
-Header &Header::operator =(const Header &nHeader){
-    if(*this == nHeader)
-        return *this;
-    _SequenceNumber = nHeader.getSequenceNumber();
-    _CommandId = nHeader.getCommandId();
-    _CommandStatus = nHeader.getCommandStatus();
-    _SequenceNumber = nHeader.getSequenceNumber();
+bool Header::operator ==(const Header &other) const {
+  return ((command_length == other.getCommandLength()) &&
+             (command_id == other.getCommandId()) &&
+             (command_status == other.getCommandStatus()) &&
+             (sequence_number == other.getSequenceNumber()));
+}
+
+bool Header::operator !=(const Header &other) const {
+  return !operator ==(other);
+}
+
+Header &Header::operator =(const Header &other) {
+  if (*this == other)
     return *this;
+  command_length = other.getCommandLength();
+  command_id = other.getCommandId();
+  command_status = other.getCommandStatus();
+  sequence_number = other.getSequenceNumber();
+  return *this;
 }
 
-void Header::setCommandLength(const quint32 nCommandLength){
-    _CommandLength = nCommandLength;
+void Header::setCommandLength(quint32 command_length) {
+  this->command_length = command_length;
 }
 
-const quint32 Header::getCommandLength() const{
-    return _CommandLength;
+quint32 Header::getCommandLength() const {
+  return command_length;
+ }
+
+void Header::setCommandId(quint32 command_id) {
+  this->command_id = command_id;
 }
 
-void Header::setCommandId(const quint32 nCommandId){
-    _CommandId = nCommandId;
+quint32 Header::getCommandId() const {
+  return command_id;
 }
 
-const quint32 Header::getCommandId() const{
-    return _CommandId;
+void Header::setCommandStatus(quint32 command_status) {
+  this->command_status = command_status;
 }
 
-void Header::setCommandStatus(const quint32 nCommandStatus){
-    _CommandStatus = nCommandStatus;
+quint32 Header::getCommandStatus() const {
+  return command_status;
 }
 
-const quint32 Header::getCommandStatus() const{
-    return _CommandStatus;
+void Header::setSequenceNumber(quint32 sequence_number) {
+  this->sequence_number = sequence_number;
 }
 
-void Header::setSequenceNumber(const quint32 nSequenceNumber){
-    _SequenceNumber = nSequenceNumber;
+quint32 Header::getSequenceNumber() const {
+  return sequence_number;
 }
 
-const quint32 Header::getSequenceNumber() const{
-    return _SequenceNumber;
-}
+} // namespace pdu
+} // namespace qsmpp

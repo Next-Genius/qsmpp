@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef QSMPP_GLOBAL_H
 #define QSMPP_GLOBAL_H
 
