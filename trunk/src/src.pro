@@ -26,7 +26,18 @@ win32: DLLDESTDIR = ../lib
 
 HEADERS += \
     global.h \
-    header.h
+    header.h \
+    constants.h \
+    bind.h \
+    tlv.h \
+    sc_interface_version.h \
+    bind_resp.h \
+    outbind.h
 
 SOURCES += \
-    header.cpp
+    header.cpp \
+    bind.cpp \
+    tlv.cpp \
+    sc_interface_version.cpp \
+    bind_resp.cpp \
+    outbind.cpp
