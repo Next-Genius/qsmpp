@@ -1,0 +1,4 @@
+#ifndef QSMPP_QUERY_SM_RESP_H
+#define QSMPP_QUERY_SM_RESP_H
+
+#endif // QSMPP_QUERY_SM_RESP_H

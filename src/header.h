@@ -9,9 +9,9 @@ namespace pdu {
 class QSMPP_EXPORT Header {
 public:
   Header(quint32 command_length = 0,
-              quint32 command_id = 0,
-              quint32 command_status = 0,
-              quint32 sequence_number = 0);
+         quint32 command_id = 0,
+         quint32 command_status = 0,
+         quint32 sequence_number = 0);
 
   Header(const Header &other);
 

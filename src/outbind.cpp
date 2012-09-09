@@ -4,8 +4,8 @@ namespace qsmpp {
 namespace pdu {
 
 Outbind::Outbind(const Header &other_header,
-                          const CoctetString &system_id,
-                          const CoctetString &password):
+                 const CoctetString &system_id,
+                 const CoctetString &password):
   Header(other_header),
   system_id(system_id),
   password(password) {
@@ -21,8 +21,8 @@ Outbind::Outbind(const Outbind &other):
 
 bool Outbind::operator ==(const Outbind &other) const {
   return (Header::operator ==(other) &&
-             system_id == other.getSystemId() &&
-             password == other.getPassword());
+          system_id == other.getSystemId() &&
+          password == other.getPassword());
 }
 
 bool Outbind::operator !=(const Outbind &other) const {
@@ -31,7 +31,7 @@ bool Outbind::operator !=(const Outbind &other) const {
 
 Outbind &Outbind::operator =(const Outbind &other) {
   if (*this == other)
-      return *this;
+    return *this;
   Header::operator =(other);
   system_id = other.getSystemId();
   password = other.getPassword();

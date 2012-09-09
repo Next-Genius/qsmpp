@@ -2,6 +2,7 @@
 
 namespace qsmpp {
 namespace pdu {
+namespace tlv {
 
 ScInterfaceVersion::ScInterfaceVersion(quint8 value):
   TLV(constants::TLVtags::SC_INTERFACE_VERSION, 1),
@@ -23,8 +24,8 @@ bool ScInterfaceVersion::operator !=(const ScInterfaceVersion &other) const {
 }
 
 ScInterfaceVersion &ScInterfaceVersion::operator =(const ScInterfaceVersion &other) {
-  if(*this == other)
-      return *this;
+  if (*this == other)
+    return *this;
   TLV::operator =(other);
   value = other.getValue();
   return *this;
@@ -38,5 +39,6 @@ quint8 ScInterfaceVersion::getValue() const {
   return value;
 }
 
+} // namespace tlv
 } // namespace pdu
 } // namespace qsmpp

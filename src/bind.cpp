@@ -4,13 +4,13 @@ namespace qsmpp {
 namespace pdu {
 
 Bind::Bind(const Header &other_header,
-                const CoctetString &system_id,
-                const CoctetString &password,
-                const CoctetString &system_type,
-                quint8 interface_version,
-                quint8 addr_ton,
-                quint8 addr_npi,
-                const CoctetString &address_range):
+           const CoctetString &system_id,
+           const CoctetString &password,
+           const CoctetString &system_type,
+           quint8 interface_version,
+           quint8 addr_ton,
+           quint8 addr_npi,
+           const CoctetString &address_range):
   Header(other_header),
   system_id(system_id),
   password(password),
@@ -36,13 +36,13 @@ Bind::Bind(const Bind &other):
 
 bool Bind::operator ==(const Bind &other) const {
   return (Header::operator ==(other) &&
-             system_id == other.getSystemId() &&
-             password == other.getPassword() &&
-             system_type == other.getSystemType() &&
-             interface_version == other.getInterfaceVersion() &&
-             addr_ton == other.getAddrTON() &&
-             addr_npi == other.getAddrNPI() &&
-             address_range == other.getAddressRange());
+          system_id == other.getSystemId() &&
+          password == other.getPassword() &&
+          system_type == other.getSystemType() &&
+          interface_version == other.getInterfaceVersion() &&
+          addr_ton == other.getAddrTON() &&
+          addr_npi == other.getAddrNPI() &&
+          address_range == other.getAddressRange());
 }
 
 bool Bind::operator !=(const Bind &other) const {
@@ -51,7 +51,7 @@ bool Bind::operator !=(const Bind &other) const {
 
 Bind &Bind::operator =(const Bind &other) {
   if (*this == other)
-      return *this;
+    return *this;
   Header::operator =(other);
   system_id = other.getSystemId();
   password = other.getPassword();
