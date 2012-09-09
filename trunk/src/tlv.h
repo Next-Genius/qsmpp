@@ -5,13 +5,14 @@
 
 namespace qsmpp {
 namespace pdu {
+namespace tlv {
 
 class QSMPP_EXPORT TLV {
   quint16 tag;
   quint16 length;
 public:
   TLV(quint16 tag = 0,
-        quint16 length = 0);
+      quint16 length = 0);
 
   TLV(const TLV &other);
 
@@ -30,6 +31,7 @@ public:
   quint16 getLength() const;
 };
 
+} // namespace tlv
 } // namespace pdu
 } // namespace qsmpp
 

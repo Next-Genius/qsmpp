@@ -25,9 +25,9 @@ Header::Header(const Header &other):
 
 bool Header::operator ==(const Header &other) const {
   return ((command_length == other.getCommandLength()) &&
-             (command_id == other.getCommandId()) &&
-             (command_status == other.getCommandStatus()) &&
-             (sequence_number == other.getSequenceNumber()));
+          (command_id == other.getCommandId()) &&
+          (command_status == other.getCommandStatus()) &&
+          (sequence_number == other.getSequenceNumber()));
 }
 
 bool Header::operator !=(const Header &other) const {

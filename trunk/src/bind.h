@@ -16,13 +16,13 @@ class QSMPP_EXPORT Bind : public Header {
   CoctetString address_range;
 public:
   Bind(const Header &other_header = Header(),
-         const CoctetString &system_id = "",
-         const CoctetString &password = "",
-         const CoctetString &system_type = "",
-         quint8 interface_version = constants::InterfaceVersion::SMPP_VER_5_0,
-         quint8 addr_ton = 0,
-         quint8 addr_npi = 0,
-         const CoctetString &address_range = "");
+       const CoctetString &system_id = "",
+       const CoctetString &password = "",
+       const CoctetString &system_type = "",
+       quint8 interface_version = constants::InterfaceVersion::SMPP_VER_5_0,
+       quint8 addr_ton = 0,
+       quint8 addr_npi = 0,
+       const CoctetString &address_range = "");
 
   Bind(const Bind &other);
 

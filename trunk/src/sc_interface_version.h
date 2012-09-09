@@ -5,6 +5,7 @@
 
 namespace qsmpp {
 namespace pdu {
+namespace tlv {
 
 class QSMPP_EXPORT ScInterfaceVersion : public TLV {
   quint8 value;
@@ -24,6 +25,7 @@ public:
   quint8 getValue() const;
 };
 
+} // namespace tlv
 } // namespace pdu
 } // namespace qsmpp
 

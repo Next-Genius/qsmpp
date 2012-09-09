@@ -2,6 +2,7 @@
 
 namespace qsmpp {
 namespace pdu {
+namespace tlv {
 
 TLV::TLV(quint16 tag, quint16 length):
   tag(tag), length(length) {
@@ -23,7 +24,7 @@ bool TLV::operator !=(const TLV &other) const {
 
 TLV &TLV::operator = (const TLV &other) {
   if (*this == other)
-      return *this;
+    return *this;
   tag = other.getTag();
   length = other.getLength();
   return *this;
@@ -45,5 +46,6 @@ quint16 TLV::getLength() const {
   return length;
 }
 
+} // namespace tlv
 } // namespace pdu
 } // namespace qsmpp

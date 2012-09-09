@@ -11,8 +11,8 @@ class QSMPP_EXPORT Outbind : public Header {
   CoctetString password;
 public:
   Outbind(const Header &other_header,
-              const CoctetString &system_id = "",
-              const CoctetString &password = "");
+          const CoctetString &system_id = "",
+          const CoctetString &password = "");
 
   Outbind(const Outbind &other);
 
