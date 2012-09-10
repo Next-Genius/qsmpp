@@ -4,13 +4,11 @@ namespace qsmpp {
 namespace pdu {
 namespace tlv {
 
-TLV::TLV(quint16 tag, quint16 length):
-  tag(tag), length(length) {
+TLV::TLV(quint16 tag, quint16 length): tag(tag), length(length) {
 
 }
 
-TLV::TLV(const TLV &other):
-  tag(other.getTag()), length(other.getLength()) {
+TLV::TLV(const TLV &other): tag(other.getTag()), length(other.getLength()) {
 
 }
 

@@ -3,19 +3,15 @@
 namespace qsmpp {
 namespace pdu {
 
-Outbind::Outbind(const Header &other_header,
+Outbind::Outbind(const Header &header,
                  const CoctetString &system_id,
                  const CoctetString &password):
-  Header(other_header),
-  system_id(system_id),
-  password(password) {
+  Header(header), system_id(system_id), password(password) {
 
 }
 
 Outbind::Outbind(const Outbind &other):
-  Header(other),
-  system_id(other.getSystemId()),
-  password(other.getPassword()) {
+  Header(other), system_id(other.getSystemId()), password(other.getPassword()) {
 
 }
 

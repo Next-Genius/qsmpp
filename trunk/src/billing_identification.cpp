@@ -5,14 +5,12 @@ namespace pdu {
 namespace tlv {
 
 BillingIdentification::BillingIdentification(const octetString &value):
-  TLV(constants::TLVtags::BILLING_IDENTIFICATION, value.size()),
-  value(value) {
+  TLV(constants::TLVtags::BILLING_IDENTIFICATION, value.size()), value(value) {
 
 }
 
 BillingIdentification::BillingIdentification(
-  const BillingIdentification &other):
-    TLV(other), value(other.getValue()) {
+  const BillingIdentification &other): TLV(other), value(other.getValue()) {
 
 }
 
