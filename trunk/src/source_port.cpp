@@ -22,8 +22,7 @@ bool SourcePort::operator !=(const SourcePort &other) const {
   return !this->operator ==(other);
 }
 
-SourcePort &SourcePort::operator =(
-  const SourcePort &other) {
+SourcePort &SourcePort::operator =(const SourcePort &other) {
   if(*this == other)
     return *this;
   TLV::operator =(other);
