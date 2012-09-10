@@ -32,7 +32,7 @@ public:
   void setScInterfaceVersion(
     const tlv::ScInterfaceVersion *sc_interface_version);
 
-  const tlv::ScInterfaceVersion *getScInterfaceVersion() const;
+  tlv::ScInterfaceVersion *getScInterfaceVersion() const;
 };
 
 } // namespace pdu
