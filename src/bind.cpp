@@ -3,7 +3,7 @@
 namespace qsmpp {
 namespace pdu {
 
-Bind::Bind(const Header &other_header,
+Bind::Bind(const Header &header,
            const CoctetString &system_id,
            const CoctetString &password,
            const CoctetString &system_type,
@@ -11,7 +11,7 @@ Bind::Bind(const Header &other_header,
            quint8 addr_ton,
            quint8 addr_npi,
            const CoctetString &address_range):
-  Header(other_header),
+  Header(header),
   system_id(system_id),
   password(password),
   system_type(system_type),

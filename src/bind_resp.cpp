@@ -3,10 +3,10 @@
 namespace qsmpp {
 namespace pdu {
 
-BindResp::BindResp(const Header &other_header,
+BindResp::BindResp(const Header &header,
                    const CoctetString &system_id,
                    const tlv::ScInterfaceVersion *sc_interface_version):
-  Header(other_header),
+  Header(header),
   system_id(system_id),
   sc_interface_version(0) {
   if (sc_interface_version) {
@@ -33,11 +33,17 @@ BindResp::~BindResp() {
     sc_interface_version = 0;
   }
 }
-//TODO: ==
+
 bool BindResp::operator ==(const BindResp &other) const {
-  return (Header::operator ==(other) &&
-          system_id == other.getSystemId() &&
-          *sc_interface_version == *other.getScInterfaceVersion());
+  tlv::ScInterfaceVersion *other_sc_interface_version(
+    other.getScInterfaceVersion());
+  if (other_sc_interface_version && sc_interface_version) {
+    if (*other_sc_interface_version != *sc_interface_version)
+      return false;
+  } else if (other_sc_interface_version != 0 || sc_interface_version != 0) {
+    return false;
+  }
+  return (Header::operator ==(other) && system_id == other.getSystemId());
 }
 
 bool BindResp::operator !=(const BindResp &other) const {
@@ -53,7 +59,7 @@ BindResp &BindResp::operator =(const BindResp &other) {
   return *this;
 }
 
-void BindResp::setSystemId(const CoctetString &system_id){
+void BindResp::setSystemId(const CoctetString &system_id) {
   this->system_id = system_id;
 }
 
