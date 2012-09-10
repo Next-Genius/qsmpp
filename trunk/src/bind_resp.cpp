@@ -33,7 +33,7 @@ BindResp::~BindResp() {
     sc_interface_version = 0;
   }
 }
-
+//TODO: ==
 bool BindResp::operator ==(const BindResp &other) const {
   return (Header::operator ==(other) &&
           system_id == other.getSystemId() &&
@@ -49,14 +49,7 @@ BindResp &BindResp::operator =(const BindResp &other) {
     return *this;
   Header::operator =(other);
   system_id = other.getSystemId();
-  if(this->sc_interface_version) {
-    delete this->sc_interface_version;
-    this->sc_interface_version = 0;
-  }
-  if (sc_interface_version) {
-    this->sc_interface_version =
-      new tlv::ScInterfaceVersion(*sc_interface_version);
-  }
+  setScInterfaceVersion(other.getScInterfaceVersion());
   return *this;
 }
 
@@ -70,17 +63,18 @@ CoctetString BindResp::getSystemId() const {
 
 void BindResp::setScInterfaceVersion(
   const tlv::ScInterfaceVersion *sc_interface_version) {
-  if (this->sc_interface_version) {
+  if (this->sc_interface_version && sc_interface_version) {
+    *(this->sc_interface_version) = *sc_interface_version;
+  } else if (sc_interface_version) {
+    this->sc_interface_version =
+      new tlv::ScInterfaceVersion(*sc_interface_version);
+  } else if (this->sc_interface_version) {
     delete this->sc_interface_version;
     this->sc_interface_version = 0;
   }
-  if (sc_interface_version) {
-    this->sc_interface_version =
-      new tlv::ScInterfaceVersion(*sc_interface_version);
-  }
 }
 
-const tlv::ScInterfaceVersion *BindResp::getScInterfaceVersion() const {
+tlv::ScInterfaceVersion *BindResp::getScInterfaceVersion() const {
   return sc_interface_version;
 }
 
