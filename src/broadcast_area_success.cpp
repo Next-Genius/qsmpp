@@ -5,22 +5,18 @@ namespace pdu {
 namespace tlv {
 
 BroadcastAreaSuccess::BroadcastAreaSuccess(quint8 value):
-  TLV(constants::TLVtags::BROADCAST_AREA_SUCCESS, 1),
-  value(value) {
+  TLV(constants::TLVtags::BROADCAST_AREA_SUCCESS, 1), value(value) {
 
 }
 
-BroadcastAreaSuccess::BroadcastAreaSuccess(
-  const BroadcastAreaSuccess &other):
-    TLV(other),
-    value(other.getValue()) {
+BroadcastAreaSuccess::BroadcastAreaSuccess(const BroadcastAreaSuccess &other):
+  TLV(other), value(other.getValue()) {
 
 }
 
 bool BroadcastAreaSuccess::operator ==(
   const BroadcastAreaSuccess &other) const {
-  return (TLV::operator ==(other) &&
-          value == other.getValue());
+  return (TLV::operator ==(other) && value == other.getValue());
 }
 
 bool BroadcastAreaSuccess::operator !=(
@@ -32,7 +28,7 @@ BroadcastAreaSuccess &BroadcastAreaSuccess::operator =(
   const BroadcastAreaSuccess &other) {
   if(*this == other)
     return *this;
-  TLV::operator = (other);
+  TLV::operator =(other);
   value = other.getValue();
   return *this;
 }

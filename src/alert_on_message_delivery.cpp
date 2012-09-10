@@ -4,25 +4,21 @@ namespace qsmpp {
 namespace pdu {
 namespace tlv {
 
-AlertOnMessageDelivery::AlertOnMessageDelivery(
-  const octetString &value):
-    TLV(constants::TLVtags::ALERT_ON_MESSAGE_DELIVERY,
-        value.size()),
-    value(value) {
+AlertOnMessageDelivery::AlertOnMessageDelivery(const octetString &value):
+  TLV(constants::TLVtags::ALERT_ON_MESSAGE_DELIVERY, value.size()),
+  value(value) {
 
 }
 
 AlertOnMessageDelivery::AlertOnMessageDelivery(
   const AlertOnMessageDelivery &other):
-    TLV(other),
-    value(other.getValue()) {
+    TLV(other), value(other.getValue()) {
 
 }
 
 bool AlertOnMessageDelivery::operator ==(
   const AlertOnMessageDelivery &other) const {
-  return (TLV::operator ==(other) &&
-          value == other.getValue());
+  return (TLV::operator ==(other) && value == other.getValue());
 }
 
 bool AlertOnMessageDelivery::operator !=(

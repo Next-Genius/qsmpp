@@ -4,25 +4,21 @@ namespace qsmpp {
 namespace pdu {
 namespace tlv {
 
-AdditionalStatusInfoText::AdditionalStatusInfoText(
-  const CoctetString &value):
-    TLV(constants::TLVtags::ADDITIONAL_STATUS_INFO_TEXT,
-        value.size() + 1),
-    value(value) {
+AdditionalStatusInfoText::AdditionalStatusInfoText(const CoctetString &value):
+  TLV(constants::TLVtags::ADDITIONAL_STATUS_INFO_TEXT, value.size() + 1),
+  value(value) {
 
 }
 
 AdditionalStatusInfoText::AdditionalStatusInfoText(
   const AdditionalStatusInfoText &other):
-    TLV(other),
-    value(other.getValue()) {
+    TLV(other), value(other.getValue()) {
 
 }
 
 bool AdditionalStatusInfoText::operator ==(
   const AdditionalStatusInfoText &other) const {
-  return (TLV::operator ==(other) &&
-          value == other.getValue());
+  return (TLV::operator ==(other) && value == other.getValue());
 }
 
 bool AdditionalStatusInfoText::operator !=(
@@ -33,7 +29,7 @@ bool AdditionalStatusInfoText::operator !=(
 AdditionalStatusInfoText &AdditionalStatusInfoText::operator =(
   const AdditionalStatusInfoText &other) {
   if(*this == other)
-      return *this;
+    return *this;
   TLV::operator =(other);
   value = other.getValue();
   return *this;

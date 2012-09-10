@@ -4,25 +4,21 @@ namespace qsmpp {
 namespace pdu {
 namespace tlv {
 
-BroadcastAreaIdentifier::BroadcastAreaIdentifier(
-  const octetString &value):
-    TLV(constants::TLVtags::BROADCAST_AREA_IDENTIFIER,
-        value.size()),
+BroadcastAreaIdentifier::BroadcastAreaIdentifier(const octetString &value):
+    TLV(constants::TLVtags::BROADCAST_AREA_IDENTIFIER, value.size()),
     value(value) {
 
 }
 
 BroadcastAreaIdentifier::BroadcastAreaIdentifier(
   const BroadcastAreaIdentifier &other):
-    TLV(other),
-    value(other.getValue()) {
+    TLV(other), value(other.getValue()) {
 
 }
 
 bool BroadcastAreaIdentifier::operator ==(
     const BroadcastAreaIdentifier &other) const {
-    return (TLV::operator ==(other) &&
-            value == other.getValue());
+    return (TLV::operator ==(other) && value == other.getValue());
 }
 
 bool BroadcastAreaIdentifier::operator !=(

@@ -5,22 +5,19 @@ namespace pdu {
 namespace tlv {
 
 BroadcastMessageClass::BroadcastMessageClass(quint8 value):
-  TLV(constants::TLVtags::BROADCAST_MESSAGE_CLASS, 1),
-  value(value) {
+  TLV(constants::TLVtags::BROADCAST_MESSAGE_CLASS, 1), value(value) {
 
 }
 
 BroadcastMessageClass::BroadcastMessageClass(
   const BroadcastMessageClass &other):
-    TLV(other),
-    value(other.getValue()) {
+    TLV(other), value(other.getValue()) {
 
 }
 
 bool BroadcastMessageClass::operator ==(
   const BroadcastMessageClass &other) const {
-  return (TLV::operator ==(other) &&
-          value == other.getValue());
+  return (TLV::operator ==(other) && value == other.getValue());
 }
 
 bool BroadcastMessageClass::operator !=(

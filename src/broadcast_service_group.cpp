@@ -5,23 +5,20 @@ namespace pdu {
 namespace tlv {
 
 BroadcastServiceGroup::BroadcastServiceGroup(const octetString &value):
-  TLV(constants::TLVtags::BROADCAST_SERVICE_GROUP,
-      value.size()),
+  TLV(constants::TLVtags::BROADCAST_SERVICE_GROUP, value.size()),
   value(value) {
 
 }
 
 BroadcastServiceGroup::BroadcastServiceGroup(
   const BroadcastServiceGroup &other):
-    TLV(other),
-    value(other.getValue()) {
+    TLV(other), value(other.getValue()) {
 
 }
 
 bool BroadcastServiceGroup::operator ==(
   const BroadcastServiceGroup &other) const {
-  return (TLV::operator ==(other) &&
-          value == other.getValue());
+  return (TLV::operator ==(other) && value == other.getValue());
 }
 
 bool BroadcastServiceGroup::operator !=(
@@ -30,7 +27,7 @@ bool BroadcastServiceGroup::operator !=(
 }
 
 BroadcastServiceGroup &BroadcastServiceGroup::operator =(
-  const BroadcastServiceGroup &other ) {
+  const BroadcastServiceGroup &other) {
   if(*this == other)
     return *this;
   TLV::operator =(other);

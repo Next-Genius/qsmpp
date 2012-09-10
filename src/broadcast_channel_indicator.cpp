@@ -5,22 +5,19 @@ namespace pdu {
 namespace tlv {
 
 BroadcastChannelIndicator::BroadcastChannelIndicator(quint8 value):
-  TLV(constants::TLVtags::BROADCAST_CHANNEL_INDICATOR, 1),
-  value(value) {
+  TLV(constants::TLVtags::BROADCAST_CHANNEL_INDICATOR, 1), value(value) {
 
 }
 
 BroadcastChannelIndicator::BroadcastChannelIndicator(
   const BroadcastChannelIndicator &other):
-    TLV(other),
-    value(other.getValue()) {
+    TLV(other), value(other.getValue()) {
 
 }
 
 bool BroadcastChannelIndicator::operator ==(
   const BroadcastChannelIndicator &other) const {
-  return (TLV::operator ==(other) &&
-          value == other.getValue());
+  return (TLV::operator ==(other) && value == other.getValue());
 }
 
 bool BroadcastChannelIndicator::operator !=(

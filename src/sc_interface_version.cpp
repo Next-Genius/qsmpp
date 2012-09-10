@@ -5,8 +5,7 @@ namespace pdu {
 namespace tlv {
 
 ScInterfaceVersion::ScInterfaceVersion(quint8 value):
-  TLV(constants::TLVtags::SC_INTERFACE_VERSION, 1),
-  value(value) {
+  TLV(constants::TLVtags::SC_INTERFACE_VERSION, 1), value(value) {
 
 }
 
@@ -23,7 +22,8 @@ bool ScInterfaceVersion::operator !=(const ScInterfaceVersion &other) const {
   return !this->operator ==(other);
 }
 
-ScInterfaceVersion &ScInterfaceVersion::operator =(const ScInterfaceVersion &other) {
+ScInterfaceVersion &ScInterfaceVersion::operator =(
+  const ScInterfaceVersion &other) {
   if (*this == other)
     return *this;
   TLV::operator =(other);
