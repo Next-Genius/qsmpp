@@ -13,15 +13,13 @@ BroadcastFrequencyInterval::BroadcastFrequencyInterval(
 
 BroadcastFrequencyInterval::BroadcastFrequencyInterval(
   const BroadcastFrequencyInterval &other):
-    TLV(other),
-    value(other.getValue()) {
+    TLV(other), value(other.getValue()) {
 
 }
 
 bool BroadcastFrequencyInterval::operator ==(
   const BroadcastFrequencyInterval &other) const {
-  return (TLV::operator ==(other) &&
-          value == other.getValue());
+  return (TLV::operator ==(other) && value == other.getValue());
 }
 
 bool BroadcastFrequencyInterval::operator !=(

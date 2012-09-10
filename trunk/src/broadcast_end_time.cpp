@@ -5,31 +5,24 @@ namespace pdu {
 namespace tlv {
 
 BroadcastEndTime::BroadcastEndTime(const CoctetString &value):
-  TLV(constants::TLVtags::BROADCAST_END_TIME, value.size() + 1),
-  value(value) {
+  TLV(constants::TLVtags::BROADCAST_END_TIME, value.size() + 1), value(value) {
 
 }
 
-BroadcastEndTime::BroadcastEndTime(
-  const BroadcastEndTime &other):
-    TLV(other),
-    value(other.getValue()) {
+BroadcastEndTime::BroadcastEndTime(const BroadcastEndTime &other):
+  TLV(other), value(other.getValue()) {
 
 }
 
-bool BroadcastEndTime::operator ==(
-  const BroadcastEndTime &other) const {
-  return (TLV::operator ==(other) &&
-          value == other.getValue());
+bool BroadcastEndTime::operator ==(const BroadcastEndTime &other) const {
+  return (TLV::operator ==(other) && value == other.getValue());
 }
 
-bool BroadcastEndTime::operator !=(
-  const BroadcastEndTime &other) const {
+bool BroadcastEndTime::operator !=(const BroadcastEndTime &other) const {
   return !this->operator ==(other);
 }
 
-BroadcastEndTime &BroadcastEndTime::operator =(
-  const BroadcastEndTime &other) {
+BroadcastEndTime &BroadcastEndTime::operator =(const BroadcastEndTime &other) {
   if(*this == other)
     return *this;
   TLV::operator =(other);

@@ -4,24 +4,19 @@ namespace qsmpp {
 namespace pdu {
 namespace tlv {
 
-BroadcastContentType::BroadcastContentType(
-  const octetString &value):
-    TLV(constants::TLVtags::BROADCAST_CONTENT_TYPE, value.size()),
-    value(value) {
+BroadcastContentType::BroadcastContentType(const octetString &value):
+  TLV(constants::TLVtags::BROADCAST_CONTENT_TYPE, value.size()), value(value) {
 
 }
 
-BroadcastContentType::BroadcastContentType(
-  const BroadcastContentType &other):
-    TLV(other),
-    value(other.getValue()) {
+BroadcastContentType::BroadcastContentType(const BroadcastContentType &other):
+  TLV(other), value(other.getValue()) {
 
 }
 
 bool BroadcastContentType::operator ==(
   const BroadcastContentType &other) const {
-  return (TLV::operator ==(other) &&
-          value == other.getValue());
+  return (TLV::operator ==(other) && value == other.getValue());
 }
 
 bool BroadcastContentType::operator !=(

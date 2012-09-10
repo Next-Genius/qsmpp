@@ -5,22 +5,18 @@ namespace pdu {
 namespace tlv {
 
 BroadcastErrorStatus::BroadcastErrorStatus(quint32 value):
-  TLV(constants::TLVtags::BROADCAST_ERROR_STATUS, 4),
-  value(value) {
+  TLV(constants::TLVtags::BROADCAST_ERROR_STATUS, 4), value(value) {
 
 }
 
-BroadcastErrorStatus::BroadcastErrorStatus(
-  const BroadcastErrorStatus &other):
-    TLV(other),
-    value(other.getValue()) {
+BroadcastErrorStatus::BroadcastErrorStatus(const BroadcastErrorStatus &other):
+  TLV(other), value(other.getValue()) {
 
 }
 
 bool BroadcastErrorStatus::operator ==(
   const BroadcastErrorStatus &other) const {
-  return (TLV::operator ==(other) &&
-          value == other.getValue());
+  return (TLV::operator ==(other) && value == other.getValue());
 }
 
 bool BroadcastErrorStatus::operator !=(

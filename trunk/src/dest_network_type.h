@@ -10,7 +10,7 @@ namespace tlv {
 class QSMPP_EXPORT DestNetworkType : public TLV {
   quint8 value;
 public:
-  DestNetworkType(const quint8 value = 0);
+  DestNetworkType(quint8 value = 0);
 
   DestNetworkType(const DestNetworkType &other);
 
