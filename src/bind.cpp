@@ -1,6 +1,6 @@
 #include <bind.h>
 
-namespace qsmpp {
+namespace smpp {
 namespace pdu {
 
 Bind::Bind(const Header &header,
@@ -120,4 +120,4 @@ CoctetString Bind::getAddressRange() const {
 }
 
 } // namespace pdu
-} // namespace qsmpp
+} // namespace smpp

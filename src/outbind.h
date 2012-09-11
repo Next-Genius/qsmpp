@@ -1,12 +1,12 @@
-#ifndef QSMPP_OUTBIND_H
-#define QSMPP_OUTBIND_H
+#ifndef SMPP_OUTBIND_H
+#define SMPP_OUTBIND_H
 
 #include <header.h>
 
-namespace qsmpp {
+namespace smpp {
 namespace pdu {
 
-class QSMPP_EXPORT Outbind : public Header {
+class SMPP_EXPORT Outbind : public Header {
   CoctetString system_id;
   CoctetString password;
 public:
@@ -32,6 +32,6 @@ public:
 };
 
 } // namespace pdu
-} // namespace qsmpp
+} // namespace smpp
 
-#endif // QSMPP_OUTBIND_H
+#endif // SMPP_OUTBIND_H

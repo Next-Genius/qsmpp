@@ -1,13 +1,13 @@
-#ifndef QSMPP_BIND_RESP_H
-#define QSMPP_BIND_RESP_H
+#ifndef SMPP_BIND_RESP_H
+#define SMPP_BIND_RESP_H
 
 #include <header.h>
 #include <sc_interface_version.h>
 
-namespace qsmpp {
+namespace smpp {
 namespace pdu {
 
-class QSMPP_EXPORT BindResp : public Header {
+class SMPP_EXPORT BindResp : public Header {
   CoctetString system_id;
   tlv::ScInterfaceVersion *sc_interface_version;
 public:
@@ -36,6 +36,6 @@ public:
 };
 
 } // namespace pdu
-} // namespace qsmpp
+} // namespace smpp
 
-#endif // QSMPP_BIND_RESP_H
+#endif // SMPP_BIND_RESP_H

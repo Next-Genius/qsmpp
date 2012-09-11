@@ -1,9 +1,9 @@
-#ifndef QSMPP_SUBMIT_MULTI_RESP_H
-#define QSMPP_SUBMIT_MULTI_RESP_H
+#ifndef SMPP_SUBMIT_MULTI_RESP_H
+#define SMPP_SUBMIT_MULTI_RESP_H
 
 #include <tlv.h>
 
-namespace qsmpp {
+namespace smpp {
 namespace pdu {
 namespace tlv {
 
@@ -11,6 +11,6 @@ namespace tlv {
 
 } // namespace tlv
 } // namespace pdu
-} // namespace qsmpp
+} // namespace smpp
 
-#endif // QSMPP_SUBMIT_MULTI_RESP_H
+#endif // SMPP_SUBMIT_MULTI_RESP_H

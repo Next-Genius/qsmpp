@@ -1,12 +1,12 @@
-#ifndef QSMPP_BIND_H
-#define QSMPP_BIND_H
+#ifndef SMPP_BIND_H
+#define SMPP_BIND_H
 
 #include <header.h>
 
-namespace qsmpp {
+namespace smpp {
 namespace pdu {
 
-class QSMPP_EXPORT Bind : public Header {
+class SMPP_EXPORT Bind : public Header {
   CoctetString system_id;
   CoctetString password;
   CoctetString system_type;
@@ -62,6 +62,6 @@ public:
 };
 
 } // namespace pdu
-} // namespace qsmpp
+} // namespace smpp
 
-#endif // QSMPP_BIND_H
+#endif // SMPP_BIND_H

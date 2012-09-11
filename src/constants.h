@@ -1,11 +1,11 @@
-#ifndef QSMPP_CONSTANTS_H
-#define QSMPP_CONSTANTS_H
+#ifndef SMPP_CONSTANTS_H
+#define SMPP_CONSTANTS_H
 
 #include <global.h>
 #include <QByteArray>
 #include <QString>
 
-namespace qsmpp {
+namespace smpp {
 
 typedef QByteArray octetString;
 typedef QString CoctetString;
@@ -212,6 +212,6 @@ static const quint8 SMPP_VER_5_0                   = 0x50;
 } // namespace InterfaceVersion
 
 } // namespace constants
-} // namespace qsmpp
+} // namespace smpp
 
-#endif // QSMPP_CONSTANTS_H
+#endif // SMPP_CONSTANTS_H
