@@ -1,6 +1,6 @@
 #include <outbind.h>
 
-namespace qsmpp {
+namespace smpp {
 namespace pdu {
 
 Outbind::Outbind(const Header &header,
@@ -51,4 +51,4 @@ CoctetString Outbind::getPassword() const {
 }
 
 } // namespace pdu
-} // namespace qsmpp
+} // namespace smpp

@@ -1,6 +1,6 @@
 #include <tlv.h>
 
-namespace qsmpp {
+namespace smpp {
 namespace pdu {
 namespace tlv {
 
@@ -46,4 +46,4 @@ quint16 TLV::getLength() const {
 
 } // namespace tlv
 } // namespace pdu
-} // namespace qsmpp
+} // namespace smpp

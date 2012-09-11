@@ -1,6 +1,6 @@
 #include <bind_resp.h>
 
-namespace qsmpp {
+namespace smpp {
 namespace pdu {
 
 BindResp::BindResp(const Header &header,
@@ -85,4 +85,4 @@ tlv::ScInterfaceVersion *BindResp::getScInterfaceVersion() const {
 }
 
 } // namespace pdu
-} // namespace qsmpp
+} // namespace smpp

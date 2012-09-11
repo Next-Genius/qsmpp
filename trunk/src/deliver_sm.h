@@ -1,9 +1,9 @@
-#ifndef QSMPP_DELIVER_SM_H
-#define QSMPP_DELIVER_SM_H
+#ifndef SMPP_DELIVER_SM_H
+#define SMPP_DELIVER_SM_H
 
 #include <tlv.h>
 
-namespace qsmpp {
+namespace smpp {
 namespace pdu {
 namespace tlv {
 
@@ -11,6 +11,6 @@ namespace tlv {
 
 } // namespace tlv
 } // namespace pdu
-} // namespace qsmpp
+} // namespace smpp
 
-#endif // QSMPP_DELIVER_SM_H
+#endif // SMPP_DELIVER_SM_H

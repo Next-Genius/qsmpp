@@ -1,12 +1,12 @@
-#ifndef QSMPP_GLOBAL_H
-#define QSMPP_GLOBAL_H
+#ifndef SMPP_GLOBAL_H
+#define SMPP_GLOBAL_H
 
 #include <QtCore/QtGlobal>
 
-#if defined(QSMPP_LIBRARY)
-#  define QSMPP_EXPORT Q_DECL_EXPORT
+#if defined(SMPP_LIBRARY)
+#  define SMPP_EXPORT Q_DECL_EXPORT
 #else
-#  define QSMPP_EXPORT Q_DECL_IMPORT
+#  define SMPP_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // QSMPP_GLOBAL_H
+#endif // SMPP_GLOBAL_H

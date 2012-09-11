@@ -1,4 +1,4 @@
-#ifndef QSMPP_REPLACE_SM_H
-#define QSMPP_REPLACE_SM_H
+#ifndef SMPP_REPLACE_SM_H
+#define SMPP_REPLACE_SM_H
 
-#endif // QSMPP_REPLACE_SM_H
+#endif // SMPP_REPLACE_SM_H

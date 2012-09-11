@@ -1,6 +1,6 @@
 #include <header.h>
 
-namespace qsmpp {
+namespace smpp {
 namespace pdu {
 
 Header::Header(
@@ -77,4 +77,4 @@ quint32 Header::getSequenceNumber() const {
 }
 
 } // namespace pdu
-} // namespace qsmpp
+} // namespace smpp

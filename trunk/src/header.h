@@ -1,50 +1,61 @@
-#ifndef QSMPP_HEADER_H
-#define QSMPP_HEADER_H
+#ifndef SMPP_HEADER_H
+#define SMPP_HEADER_H
 
-#include <constants.h>
+#include <command_id.h>
+#include <command_length.h>
+#include <command_status.h>
+#include <sequence_number.h>
 
-namespace qsmpp {
-namespace pdu {
+namespace smpp {
 
-class QSMPP_EXPORT Header {
+class Header {
+  CommandLength command_length;
+  CommandId command_id;
+  CommandStatus command_status;
+  SequenceNumber sequence_number;
+  Header();
+
 public:
-  Header(quint32 command_length = 0,
-         quint32 command_id = 0,
-         quint32 command_status = 0,
-         quint32 sequence_number = 0);
+  virtual ~Header();
 
-  Header(const Header &other);
+  /* Accessing */
 
-  bool operator ==(const Header &other) const;
+  smpp::uint32 command_length() const { return command_length; }
 
-  bool operator !=(const Header &other) const;
+  smpp::uint32 command_id() const { return command_id; }
 
-  Header &operator =(const Header &other);
+  smpp::uint32 sequence_number() const { return sequence_number; }
 
-  void setCommandLength(quint32 command_length);
+  /* Mutating */
 
-  quint32 getCommandLength() const;
+  void setSequenceNumber(const smpp::uint32 &p, bool allow_0 = false) {
+    sequence_number = SequenceNumber(p, allow_0);
+  }
 
-  void setCommandId(quint32 command_id);
+  virtual smpp::uint32 command_status() const = 0;
 
-  quint32 getCommandId() const;
-
-  void setCommandStatus(quint32 command_status);
-
-  quint32 getCommandStatus() const;
-
-  void setSequenceNumber(quint32 sequence_number);
-
-  quint32 getSequenceNumber() const;
+  virtual void command_status(const smpp::uint32 &p) = 0;
 
 protected:
-  quint32 command_length;
-  quint32 command_id;
-  quint32 command_status;
-  quint32 sequence_number;
+  Header(const CommandLength &command_length,
+         const CommandId &command_id,
+         const CommandStatus &command_status,
+         const SequenceNumber &sequence_number);
+
+
+  void setCommandLength(const smpp::uint32 &p) { command_length = p; }
+
+  void update_length(const int &p) { command_length += p; }
+
+  const CommandStatus &getCommandStatus(void) const {
+    return command_status;
+  }
+
+  void setCommandStatus(const CommandStatus &p) {
+    command_status = p;
+  }
 };
 
-} // namespace pdu
-} // namespace qsmpp
+} // namespace smpp
 
-#endif // QSMPP_HEADER_H
+#endif // SMPP_HEADER_H

@@ -1,4 +1,4 @@
-#ifndef QSMPP_SUBMIT_SM_H
-#define QSMPP_SUBMIT_SM_H
+#ifndef SMPP_SUBMIT_SM_H
+#define SMPP_SUBMIT_SM_H
 
-#endif // QSMPP_SUBMIT_SM_H
+#endif // SMPP_SUBMIT_SM_H
