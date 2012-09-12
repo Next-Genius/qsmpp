@@ -27,9 +27,7 @@ HEADERS += \
     global.h \
     header.h \
     constants.h \
-    bind.h \
     tlv.h \
-    bind_resp.h \
     outbind.h \
     submit_sm.h \
     submit_sm_resp.h \
@@ -53,13 +51,16 @@ HEADERS += \
     command_length.h \
     command_id.h \
     command_status.h \
-    sequence_number.h
+    sequence_number.h \
+    data_functions.h \
+    bind_receiver.h \
+    bind_receiver_resp.h \
+    bind_transceiver.h \
+    bind_transceiver_resp.h
 
 SOURCES += \
     header.cpp \
-    bind.cpp \
     tlv.cpp \
-    bind_resp.cpp \
     outbind.cpp \
     submit_sm.cpp \
     submit_sm_resp.cpp \
@@ -76,4 +77,8 @@ SOURCES += \
     query_sm_resp.cpp \
     replace_sm.cpp \
     query_broadcast_sm.cpp \
-    query_broadcast_sm_resp.cpp
+    query_broadcast_sm_resp.cpp \
+    bind_receiver.cpp \
+    bind_receiver_resp.cpp \
+    bind_transceiver.cpp \
+    bind_transceiver_resp.cpp
