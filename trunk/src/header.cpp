@@ -1,80 +1,57 @@
 #include <header.h>
 
 namespace smpp {
-namespace pdu {
 
-Header::Header(
-  quint32 command_length,
-  quint32 command_id,
-  quint32 command_status,
-  quint32 sequence_number):
-    command_length(command_length),
-    command_id(command_id),
-    command_status(command_status),
-    sequence_number(sequence_number) {
+Header::Header(const CommandLength &command_length,
+               const CommandId &command_id,
+               const CommandStatus &command_status,
+               const SequenceNumber &sequence_number) :
+  command_length(command_length),
+  command_id(command_id),
+  command_status(command_status),
+  sequence_number(sequence_number) {
 
 }
 
-Header::Header(const Header &other):
-  command_length(other.getCommandLength()),
-  command_id(other.getCommandId()),
-  command_status(other.getCommandStatus()),
-  sequence_number(other.getSequenceNumber()) {
+Header::~Header() {
 
 }
 
-bool Header::operator ==(const Header &other) const {
-  return ((command_length == other.getCommandLength()) &&
-          (command_id == other.getCommandId()) &&
-          (command_status == other.getCommandStatus()) &&
-          (sequence_number == other.getSequenceNumber()));
+void Header::insertAfterTlv(const Tlv *tlv, uint16 tag) {
+  TlvList::reverse_iterator i;
+  i = std::find_if(tlvs_.list_.rbegin(),
+                   tlvs_.list_.rend(),
+                   Tlv::CompareTag(tag));
+//  if(i == tlvs_.list_.rend())
+//    throw Smpp::Error("Missing mandatory TLV");
+  tlvs_.list_.insert(i.base(), tlv);
+  updateLength(tlv->getLength() + 4);
 }
 
-bool Header::operator !=(const Header &other) const {
-  return !operator ==(other);
+void Header::insertBeforeTlv(const Tlv *tlv, uint16 tag) {
+  TlvList::iterator i;
+  i = std::find_if(tlvs_.list_.begin(),
+                   tlvs_.list_.end(),
+                   Tlv::CompareTag(tag));
+  //if(i == tlvs_.list_.end())
+  //    throw Smpp::Error("Missing mandatory TLV");
+  tlvs_.list_.insert(i, tlv);
+  updateLength(tlv->getLength() + 4);
 }
 
-Header &Header::operator =(const Header &other) {
-  if (*this == other)
-    return *this;
-  command_length = other.getCommandLength();
-  command_id = other.getCommandId();
-  command_status = other.getCommandStatus();
-  sequence_number = other.getSequenceNumber();
-  return *this;
+Request::Request(const CommandLength &command_length,
+                 const CommandId &command_id,
+                 const SequenceNumber &sequence_number) :
+  Header(command_length, command_id, CommandStatus::ESME_ROK, sequence_number) {
+
 }
 
-void Header::setCommandLength(quint32 command_length) {
-  this->command_length = command_length;
+Response::Response(const CommandLength &command_length,
+                   const CommandId &command_id,
+                   const CommandStatus &command_status,
+                   const SequenceNumber &sequence_number) :
+  Header(command_length, command_id, command_status, sequence_number) {
+
 }
 
-quint32 Header::getCommandLength() const {
-  return command_length;
- }
-
-void Header::setCommandId(quint32 command_id) {
-  this->command_id = command_id;
-}
-
-quint32 Header::getCommandId() const {
-  return command_id;
-}
-
-void Header::setCommandStatus(quint32 command_status) {
-  this->command_status = command_status;
-}
-
-quint32 Header::getCommandStatus() const {
-  return command_status;
-}
-
-void Header::setSequenceNumber(quint32 sequence_number) {
-  this->sequence_number = sequence_number;
-}
-
-quint32 Header::getSequenceNumber() const {
-  return sequence_number;
-}
-
-} // namespace pdu
 } // namespace smpp

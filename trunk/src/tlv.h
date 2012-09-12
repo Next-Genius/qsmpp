@@ -6,6 +6,15 @@
 namespace smpp {
 
 class Tlv {
+  uint16 tag;
+  uint16 length;
+  const uint8 *value;
+
+  uint8* buildValue(const uint16 &l, const uint8 *v) {
+    uint8 *t(new uint8[l]);
+    std::copy(v, v + l, t);
+    return t;
+  }
 public:
   enum {
     dest_addr_subunit            = 0x0005,
@@ -74,65 +83,55 @@ public:
     its_session_info             = 0x1383
   };
 
-private:
-  smpp::uint16 tag;
-  smpp::uint16 length;
-  const smpp::uint8* value;
-
-  smpp::uint8* buildValue(const smpp::uint16 &l, const smpp::uint8 *v) {
-    smpp::uint8 *t(new smpp::uint8[l]);
-    std::copy(v, v + l, t);
-    return t;
-  }
-
 public:
   Tlv() : tag(0), length(0), value(0) {}
 
   Tlv(const Tlv &tlv) :
       tag(tlv.tag),
       length(tlv.length),
-      value(buildValue(tlv.value, tlv.value)) {
+      value(buildValue(tlv.length, tlv.value)) {
   }
 
-  Tlv(const smpp::uint16 &t, const smpp::uint16 &l, const smpp::uint8 *v) :
+  Tlv(const uint16 &t, const uint16 &l, const uint8 *v) :
     tag(t), length(l), value(buildValue(l, v)) {
   }
 
   virtual ~Tlv() { delete [] value; }
 
-  Tlv& operator =(const Tlv &rhs) {
-    if(this == &rhs)
+  Tlv &operator =(const Tlv &other) {
+    if(this == &other)
       return *this;
 
-    tag_ = rhs.tag_;
-    length_ = rhs.length_;
-    value_ = build_value(rhs.length_, rhs.value_);
+    tag = other.tag;
+    length = other.length;
+    value = buildValue(other.length, other.value);
   }
 
-  bool operator==(const smpp::uint16& tag) const { return tag == tag_; }
+  bool operator==(const uint16 &tag) const { return this->tag == tag; }
 
-  operator bool() const { return tag_ != 0; }
+  operator bool() const { return tag != 0; }
 
-  smpp::uint16 tag() const { return tag_; }
+  uint16 getTag() const { return tag; }
 
-  smpp::uint16 length() const { return length_; }
+  uint16 getLength() const { return length; }
 
-  const smpp::uint8* value() const { return value_; }
+  const uint8* getValue() const { return value; }
 
   class CompareTag {
-      const smpp::uint16& tag_;
-    public:
-      CompareTag(const smpp::uint16& tag) : tag_(tag) {}
-      bool operator()(const Tlv* p) const {
-          return p->tag() == tag_;
-      }
+    const uint16 &tag;
+  public:
+    CompareTag(const uint16 &tag) : tag(tag) {}
+    bool operator()(const Tlv *p) const {
+      return p->getTag() == tag;
+    }
   };
 
 protected:
-  Tlv(const smpp::uint16 &t,
-      const smpp::uint16 &l,
-      const smpp::uint8* v) :
-      tag_(t), length_(l), value_(v) {
+  Tlv(const uint16 &t,
+      const uint16 &l,
+      const uint8 *v,
+      int x) :
+    tag(t), length(l), value(v) {
   }
 };
 

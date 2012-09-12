@@ -148,7 +148,7 @@ public:
         return "Destination flag is invalid (submit_multi)";
         break;
       case ESME_RINVSUBREP:
-        return "Submit w/replace functionality has been requested where it
+        return "Submit w/replace functionality has been requested where it "
                "is either unsupported or inappropriate for the particular MC";
         break;
       case ESME_RINVESMCLASS:
@@ -191,7 +191,7 @@ public:
         return "Invalid message validity period (Expiry time)";
         break;
       case ESME_RINVDFTMSGID:
-        return "Predefined Message ID is Invalid or specified predefined
+        return "Predefined Message ID is Invalid or specified predefined "
                "message was not found";
         break;
       case ESME_RX_T_APPN:
@@ -294,28 +294,28 @@ public:
   inline static std::string long_description(const CommandStatus& p) {
     switch(p) {
       case ESME_ROK:
-        return "Specified in a response PDU to indicate the success of the
+        return "Specified in a response PDU to indicate the success of the"
                "corresponding request PDU.";
         break;
       case ESME_RINVMSGLEN:
-        return "short_message field or message_payload TLV has an invalid
-               "length (usually too long for the given MC or underlying
+        return "short_message field or message_payload TLV has an invalid"
+               "length (usually too long for the given MC or underlying"
                "network technology).";
         break;
       case ESME_RINVCMDLEN:
-        return "PDU length is considered invalid, either because the value
+        return "PDU length is considered invalid, either because the value"
                "is too short or too large for the given PDU.";
         break;
       case ESME_RINVCMDID:
-        return "Command ID is not recognised, either because the operation
+        return "Command ID is not recognised, either because the operation"
                "is not supported or unknown.";
         break;
       case ESME_RINVBNDSTS:
-        return "PDU has been sent in the wrong session state. E.g. sending a
+        return "PDU has been sent in the wrong session state. E.g. sending a"
                "submit_sm without first establishing a Bound_TX session state.";
         break;
       case ESME_RALYBND:
-        return "A bind request has been issued within a session that is
+        return "A bind request has been issued within a session that is"
                "already bound.";
         break;
       case ESME_RINVPRTFLG:
@@ -325,18 +325,18 @@ public:
         return "Registered field contains an invalid setting.";
         break;
       case ESME_RSYSERR:
-        return "MC system Error indicating that all or part of the MC is
-               "currently unavailable. This can be returned in any response
+        return "MC system Error indicating that all or part of the MC is"
+               "currently unavailable. This can be returned in any response"
                "PDU.";
         break;
       case ESME_RINVSRCADR:
-        return "Source address of message is considered invalid. Usually this
-               "is because the field is either too long or contains invalid
+        return "Source address of message is considered invalid. Usually this"
+               "is because the field is either too long or contains invalid"
                "characters.";
         break;
       case ESME_RINVDSTADR:
-        return "Destination address of message is considered invalid.
-               "Usually this is because the field is either zero length,
+        return "Destination address of message is considered invalid."
+               "Usually this is because the field is either zero length,"
                "too long or contains invalid characters.";
         break;
       case ESME_RINVMSGID:
@@ -345,21 +345,21 @@ public:
         break;
       case ESME_RBINDFAIL:
         return "A generic failure scenario for a bind attempt. This may "
-               "be due to a provisioning Error, incorrect password or other
-               "reason. A MC will typically return this Error for an invalid
-               "system_id, system_type, password or other attribute that may
+               "be due to a provisioning Error, incorrect password or other"
+               "reason. A MC will typically return this Error for an invalid"
+               "system_id, system_type, password or other attribute that may"
                "cause a bind failure.";
         break;
       case ESME_RINVPASWD:
-        return "Password field in bind PDU is invalid. This is usually
-               "returned when the length is too short or too long. It is not
-               "supposed to be returned when the ESME has specified the
+        return "Password field in bind PDU is invalid. This is usually"
+               "returned when the length is too short or too long. It is not"
+               "supposed to be returned when the ESME has specified the"
                "incorrect password.";
         break;
       case ESME_RINVSYSID:
-        return "The System ID field in bind PDU is invalid. This is usually
-               "returned when the length is too short or too long. It is not
-               "supposed to be returned when the ESME has specified the
+        return "The System ID field in bind PDU is invalid. This is usually"
+               "returned when the length is too short or too long. It is not"
+               "supposed to be returned when the ESME has specified the"
                "incorrect system id.";
         break;
       case ESME_RCANCELFAIL:
@@ -369,150 +369,150 @@ public:
         return "Generic failure for replace_sm operation.";
         break;
       case ESME_RMSGQFUL:
-        return "Used to indicate a resource Error within the MC. This may be
-               "interpreted as the maximum number of messages addressed to a
-               "single destination or a global maximum of undelivered messages
+        return "Used to indicate a resource Error within the MC. This may be"
+               "interpreted as the maximum number of messages addressed to a"
+               "single destination or a global maximum of undelivered messages"
                "within the MC.";
         break;
       case ESME_RINVSERTYP:
-        return "Service type is rejected either because it is not recognised
-               "by the MC or because its length is not within the defined
+        return "Service type is rejected either because it is not recognised"
+               "by the MC or because its length is not within the defined"
                "range.";
         break;
       case ESME_RINVNUMDESTS:
         return "The number_of_dests field in the submit_multi PDU is invalid.";
         break;
       case ESME_RINVDLNAME:
-        return "The dl_name field specified in the submit_multi PDU is either
+        return "The dl_name field specified in the submit_multi PDU is either"
                "invalid, or non-existent.";
         break;
       case ESME_RINVDESTFLAG:
-        return "The dest_flag field in the submit_multi PDU has been encoded
+        return "The dest_flag field in the submit_multi PDU has been encoded"
                "with an invalid setting.";
         break;
       case ESME_RINVSUBREP:
-        return "This can typically occur with submit_multi where the context
-               "of \"replace if present\" is often a best effort operation and
-               "MCs may not support the feature in submit_multi. Another reason
-               "for returning this Error would be where the feature has been
+        return "This can typically occur with submit_multi where the context"
+               "of \"replace if present\" is often a best effort operation and"
+               "MCs may not support the feature in submit_multi. Another reason"
+               "for returning this Error would be where the feature has been"
                "denied to an ESME.";
         break;
       case ESME_RINVESMCLASS:
         return "The esm_class field has an unsupported setting.";
         break;
       case ESME_RCNTSUBDL:
-        return "Distribution lists are not supported, are denied or
+        return "Distribution lists are not supported, are denied or"
                "unavailable.";
         break;
       case ESME_RSUBMITFAIL:
         return "Generic failure Error for submission operations.";
         break;
       case ESME_RINVSRCTON:
-        return "The source TON of the message is either invalid or
+        return "The source TON of the message is either invalid or"
                "unsupported.";
         break;
       case ESME_RINVSRCNPI:
-        return "The source NPI of the message is either invalid or
+        return "The source NPI of the message is either invalid or"
                "unsupported.";
         break;
       case ESME_RINVDSTTON:
-        return "The destination TON of the message is either invalid
+        return "The destination TON of the message is either invalid"
                "or unsupported.";
         break;
       case ESME_RINVDSTNPI:
-        return "The destination NPI of the message is either invalid
+        return "The destination NPI of the message is either invalid"
                "or unsupported.";
         break;
       case ESME_RINVSYSTYP:
-        return "The System type of bind PDU has an incorrect length or
+        return "The System type of bind PDU has an incorrect length or"
                "contains illegal characters.";
         break;
       case ESME_RINVREPFLAG:
-        return "The replace_if_present flag has been encoded with an invalid or
+        return "The replace_if_present flag has been encoded with an invalid or"
                "unsupported setting.";
         break;
       case ESME_RINVNUMMSGS:
         return "Invalid number of messages.";
         break;
       case ESME_RTHROTTLED:
-        return "This type of Error is usually returned where an ESME has
-               "exceeded a predefined messaging rate restriction applied by
+        return "This type of Error is usually returned where an ESME has"
+               "exceeded a predefined messaging rate restriction applied by"
                "the operator.";
         break;
       case ESME_RINVSCHED:
-        return "Scheduled delivery time is either the incorrect length or
+        return "Scheduled delivery time is either the incorrect length or"
                "is invalid.";
         break;
       case ESME_RINVEXPIRY:
         return "Expiry time is either the incorrect length or is invalid.";
         break;
       case ESME_RINVDFTMSGID:
-        return "The default (pre-defined) message id is either invalid or
+        return "The default (pre-defined) message id is either invalid or"
                "refers to a non-existent pre-defined message.";
         break;
       case ESME_RX_T_APPN:
-        return "Rx or Trx ESME is unable to process a delivery due to a
-               "temporary problem and is requesting that the message be retried
+        return "Rx or Trx ESME is unable to process a delivery due to a"
+               "temporary problem and is requesting that the message be retried"
                "at some future point.";
         break;
       case ESME_RX_P_APPN:
-        return "Rx or Trx ESME is unable to process a delivery due to a
-               "permanent problem relating to the given destination address and
-               "is requesting that the message and all other messages queued to
+        return "Rx or Trx ESME is unable to process a delivery due to a"
+               "permanent problem relating to the given destination address and"
+               "is requesting that the message and all other messages queued to"
                "the same destination should NOT be retried any further.";
         break;
       case ESME_RX_R_APPN:
-        return "Rx or Trx ESME is unable to process a delivery due to a
-               "problem relating to the given message and is requesting that
-               "the message is rejected and not retried. This does not affect
-               "other messages queued for the same ESME or destination
+        return "Rx or Trx ESME is unable to process a delivery due to a"
+               "problem relating to the given message and is requesting that"
+               "the message is rejected and not retried. This does not affect"
+               "other messages queued for the same ESME or destination"
                "address.";
         break;
       case ESME_RQUERYFAIL:
         return "Generic failure scenario for a query request.";
         break;
       case ESME_RINVTLVSTREAM:
-        return "Decoding of TLVs (Optional Parameters) has resulted in one of
-               "the following scenarios:\n\t1. PDU decoding completed with 1- 3
-               "octets of data remaining, indicating a corrupt PDU.\n\t2. A TLV
-               "indicated a length that was not present in the remaining PDU
-               "data (e.g. a TLV specifying a length of 10 where only 6 octets
+        return "Decoding of TLVs (Optional Parameters) has resulted in one of"
+               "the following scenarios:\n\t1. PDU decoding completed with 1- 3"
+               "octets of data remaining, indicating a corrupt PDU.\n\t2. A TLV"
+               "indicated a length that was not present in the remaining PDU"
+               "data (e.g. a TLV specifying a length of 10 where only 6 octets"
                "of PDU data remain).";
         break;
       case ESME_RTLVNOTALLWD:
-        return "A TLV has been used in an invalid context, either inappropriate
+        return "A TLV has been used in an invalid context, either inappropriate"
                "or deliberately rejected by the operator.";
         break;
       case ESME_RINVTLVLEN:
         return "A TLV has specified a length that is considered invalid.";
         break;
       case ESME_RMISSINGTLV:
-        return "A mandatory TLV such as the message_payload TLV within a
+        return "A mandatory TLV such as the message_payload TLV within a"
                "data_sm PDU is missing.";
         break;
       case ESME_RINVTLVVAL:
         return "The data content of a TLV is invalid and cannot be decoded.";
         break;
       case ESME_RDELIVERYFAILURE:
-        return "A data_sm or submit_sm operation issued in transaction mode
+        return "A data_sm or submit_sm operation issued in transaction mode"
                "has resulted in a failed delivery.";
         break;
       case ESME_RUNKNOWNERR:
         return "Some unexpected Error has occurred.";
         break;
       case ESME_RSERTYPUNAUTH:
-        return "Specific service_type has been denied for use by the given
+        return "Specific service_type has been denied for use by the given"
                "ESME.";
         break;
       case ESME_RPROHIBITED:
         return "The PDU request was recognised but is denied to the ESME.";
         break;
       case ESME_RSERTYPUNAVAIL:
-        return "Due to a service outage within the MC, a service is
+        return "Due to a service outage within the MC, a service is"
                "unavailable.";
         break;
       case ESME_RSERTYPDENIED:
-        return "Due to inappropriate message content wrt. the selected
+        return "Due to inappropriate message content wrt. the selected"
                "service_type.";
         break;
       case ESME_RINVDCS:
@@ -528,7 +528,7 @@ public:
         return "Specified value is either invalid or not supported.";
         break;
       case ESME_RINVBCASTALIAS_NAME:
-        return "Specified value has an incorrect length or contains
+        return "Specified value has an incorrect length or contains"
                "invalid/unsupported characters.";
         break;
       case ESME_RINVBCASTAREAFMT:
