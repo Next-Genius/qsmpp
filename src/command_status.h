@@ -285,13 +285,13 @@ public:
         return "Broadcast Channel Indicator is invalid";
         break;
     }
-    if (p >= 0x00000400 && p <= 0x000004FF)
+    if (p >= 0x00000400  &&p <= 0x000004FF)
       return "Reserved for MC vendor specific Errors";
 
     return "Reserved by SMPP";
   }
 
-  inline static std::string long_description(const CommandStatus& p) {
+  inline static std::string long_description(const CommandStatus &p) {
     switch(p) {
       case ESME_ROK:
         return "Specified in a response PDU to indicate the success of the"
@@ -562,7 +562,7 @@ public:
         return "Specified value violates protocol or is unsupported.";
         break;
     }
-    if (p >= 0x00000400 && p <= 0x000004FF)
+    if (p >= 0x00000400  &&p <= 0x000004FF)
       return "Reserved for MC vendor specific Errors";
 
     return "Reserved by SMPP";

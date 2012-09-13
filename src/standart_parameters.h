@@ -1,5 +1,5 @@
-#ifndef STANDART_PARAMETERS_H
-#define STANDART_PARAMETERS_H
+#ifndef SMPP_STANDART_PARAMETERS_H
+#define SMPP_STANDART_PARAMETERS_H
 
 #include <types.h>
 #include <list>
@@ -43,12 +43,12 @@ public:
   };
 
   InterfaceVersion() : value(V50) {}
-  explicit InterfaceVersion(const uint8& p) : value(p) {}
+  explicit InterfaceVersion(const uint8 &p) : value(p) {}
   explicit InterfaceVersion(int p) : value(p) {}
-  InterfaceVersion& operator=(const uint8 &p) {
+  InterfaceVersion &operator=(const uint8 &p) {
     value = p; return *this;
   }
-  InterfaceVersion& operator=(const int &p) {
+  InterfaceVersion &operator=(const int &p) {
     value = p; return *this;
   }
   operator uint8() const { return value; }
@@ -139,10 +139,15 @@ public:
              const Address &addr) :
     ton(ton), npi(npi), addr(addr) {}
 
-  explicit SmeAddress(const Address &addr) : addr(addr) {}
+  explicit SmeAddress(const Address &addr) :
+    addr(addr) {}
+
   const Ton &getTon() const { return ton; }
+
   const Npi &getNpi() const { return npi; }
+
   const Address &getAddress() const { return addr; }
+
   size_t length() const { return 2 + addr.length() + 1; }
 };
 
@@ -174,7 +179,7 @@ private:
   List addrs;
 
   struct Delete {
-      void operator()(const MultiDestinationAddressBase* p) {
+      void operator()(const MultiDestinationAddressBase *p) {
           delete p;
       }
   };
@@ -351,9 +356,45 @@ public:
   operator uint8() const { return value; }
 };
 
-class ShortMessage : public String {
+class ShortMessage {
+  String value;
 public:
   enum { MaxLength = 255 };
+
+  ShortMessage() { value.reserve(MaxLength); }
+
+  ShortMessage(const uint8 *p, uint8 len) : value(p, p + len) {}
+
+  explicit ShortMessage(const char *p) : value(p, p + strlen(p)) {}
+
+  explicit ShortMessage(const CString &p) : value(p.begin(), p.end()) {}
+
+  ShortMessage &operator =(const uint8 *p) {
+    value.assign(p + 1, p + (*p + 1));
+    return *this;
+  }
+
+  ShortMessage &operator =(const char *p) {
+    value.assign(p, p + strlen(p));
+    return *this;
+  }
+
+  ShortMessage &operator =(const CString &p) {
+    value.assign(p.begin(), p.end());
+    return *this;
+  }
+
+  operator const String&() const { return value; }
+
+  size_t length() const { return value.size(); }
+
+  String::const_iterator begin() const {
+    return value.begin();
+  }
+
+  String::const_iterator end() const {
+    return value.end();
+  }
 };
 
 class MessageId : public CString {
@@ -402,4 +443,4 @@ public:
 
 } // namespace smpp
 
-#endif // STANDART_PARAMETERS_H
+#endif // SMPP_STANDART_PARAMETERS_H

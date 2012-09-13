@@ -3,7 +3,7 @@
 namespace smpp {
 
 BindReceiverResp::BindReceiverResp() :
-  Response(CommandLength(MinLength),
+  Response(CommandLength(min_length),
            CommandId(CommandId::BindReceiverResp),
            CommandStatus(CommandStatus::ESME_ROK),
            SequenceNumber::Min) {
@@ -12,7 +12,7 @@ BindReceiverResp::BindReceiverResp() :
 BindReceiverResp::BindReceiverResp(const CommandStatus &command_status,
                                    const SequenceNumber &sequence_number,
                                    const SystemId &system_id) :
-  Response(CommandLength(MinLength),
+  Response(CommandLength(min_length),
            CommandId(CommandId::BindReceiverResp),
            command_status,
            sequence_number),

@@ -26,7 +26,6 @@ win32: DLLDESTDIR = ../lib
 HEADERS += \
     global.h \
     header.h \
-    constants.h \
     tlv.h \
     outbind.h \
     submit_sm.h \
@@ -56,7 +55,20 @@ HEADERS += \
     bind_receiver.h \
     bind_receiver_resp.h \
     bind_transceiver.h \
-    bind_transceiver_resp.h
+    bind_transceiver_resp.h \
+    bind_transmitter.h \
+    bind_transmitter_resp.h \
+    cancel_broadcast_sm_resp.h \
+    cancel_sm_resp.h \
+    enquire_link.h \
+    enquire_link_resp.h \
+    generic_nack.h \
+    replace_sm_resp.h \
+    unbind.h \
+    unbind_resp.h \
+    encoder.h \
+    decoder.h \
+    validator.h
 
 SOURCES += \
     header.cpp \
@@ -81,4 +93,15 @@ SOURCES += \
     bind_receiver.cpp \
     bind_receiver_resp.cpp \
     bind_transceiver.cpp \
-    bind_transceiver_resp.cpp
+    bind_transceiver_resp.cpp \
+    bind_transmitter.cpp \
+    bind_transmitter_resp.cpp \
+    cancel_broadcast_sm_resp.cpp \
+    cancel_broadcast_sm.cpp \
+    cancel_sm_resp.cpp \
+    enquire_link.cpp \
+    enquire_link_resp.cpp \
+    generic_nack.cpp \
+    unbind.cpp \
+    unbind_resp.cpp \
+    replace_sm_resp.cpp

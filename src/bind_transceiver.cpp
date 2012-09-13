@@ -3,7 +3,7 @@
 namespace smpp {
 
 BindTransceiver::BindTransceiver() :
-  Request(CommandLength(MinLength),
+  Request(CommandLength(min_length),
           CommandId(CommandId::BindTransceiver),
           SequenceNumber::Min) {
 
@@ -17,7 +17,7 @@ BindTransceiver::BindTransceiver(const SequenceNumber &sequence_number,
                                  const Ton &addr_ton,
                                  const Npi &addr_npi,
                                  const AddressRange &address_range) :
-    Request(CommandLength(MinLength),
+    Request(CommandLength(min_length),
             CommandId(CommandId::BindTransceiver),
             sequence_number),
     system_id(system_id),

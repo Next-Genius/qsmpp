@@ -1,16 +1,48 @@
 #ifndef SMPP_DATA_SM_RESP_H
 #define SMPP_DATA_SM_RESP_H
 
-#include <tlv.h>
+#include <header.h>
+#include <standart_parameters.h>
 
 namespace smpp {
-namespace pdu {
-namespace tlv {
 
+class DataSmResp : public Response {
+  MessageId message_id; ///< The message id.
 
+public:
+  const static int min_length = 17;
 
-} // namespace tlv
-} // namespace pdu
+  DataSmResp();
+
+  DataSmResp(const CommandStatus &command_status,
+             const SequenceNumber &sequence_number,
+             const MessageId &message_id);
+
+  ~DataSmResp();
+
+  //
+  // Mutating
+  //
+
+  void setMessageId(const MessageId &p) {
+    int diff = p.length() - message_id.length();
+    message_id = p;
+    Header::updateLength(diff);
+  }
+
+  void setMessageId(const char *p) {
+    int diff = strlen(p) - message_id.length();
+    message_id = p;
+    Header::updateLength(diff);
+  }
+
+  //
+  // Accessing
+  //
+
+  const MessageId &setMessageId() const { return message_id; }
+};
+
 } // namespace smpp
 
 #endif // SMPP_DATA_SM_RESP_H

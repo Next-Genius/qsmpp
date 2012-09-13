@@ -16,7 +16,7 @@ class BindTransceiver : public Request {
   AddressRange address_range;
 
 public:
-  const static int MinLength = 23;
+  const static int min_length = 23;
 
   BindTransceiver();
 
