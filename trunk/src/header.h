@@ -6,7 +6,6 @@
 #include <command_status.h>
 #include <sequence_number.h>
 #include <tlv.h>
-#include <data_functions.h>
 #include <iterator>
 #include <list>
 
@@ -28,35 +27,34 @@ class Header {
       Tlv *operator()(const Tlv *tp) { return new Tlv(*tp); }
     };
 
-    TlvList list_;
+    TlvList list;
 
     CTlvList() {}
     ~CTlvList() throw() {
-      std::for_each(list_.begin(), list_.end(), Delete());
+      std::for_each(list.begin(), list.end(), Delete());
     }
 
     CTlvList(const CTlvList &t) {
-      std::transform(t.list_.begin(),
-                     t.list_.end(),
-                     std::back_inserter(list_),
+      std::transform(t.list.begin(),
+                     t.list.end(),
+                     std::back_inserter(list),
                      Copy());
     }
 
     CTlvList &operator =(const CTlvList &t) {
       if(this == &t) return *this;
-      std::transform(t.list_.begin(),
-                     t.list_.end(),
-                     std::back_inserter(list_),
+      std::transform(t.list.begin(),
+                     t.list.end(),
+                     std::back_inserter(list),
                      Copy());
       return *this;
     }
-  } tlvs_;
+  } tlvs;
   Header();
 
 public:
   virtual ~Header();
 
-  /* Accessing */
 
   uint32 getCommandLength() const { return command_length; }
 
@@ -65,8 +63,6 @@ public:
   uint32 getSequenceNumber() const { return sequence_number; }
 
   virtual uint32 getCommandStatus() const = 0;
-
-  /* Mutating */
 
   void setSequenceNumber(const uint32 &p, bool allow_0 = false) {
     sequence_number = SequenceNumber(p, allow_0);
@@ -103,48 +99,48 @@ public:
   }
 
   const TlvList &getTlvList() const {
-    return tlvs_.list_;
+    return tlvs.list;
   }
 
   class ListFinder {
-    TlvList &l_;
-    uint16 tag_;
+    TlvList &l;
+    uint16 tag;
   public:
-    ListFinder(TlvList& l, uint16 tag) : l_(l), tag_(tag) {}
-    void operator()(const Tlv* tlv) {
-      if(tlv->getTag() == tag_)
-        l_.push_back(tlv);
+    ListFinder(TlvList &l, uint16 tag) : l(l), tag(tag) {}
+    void operator()(const Tlv *tlv) {
+      if(tlv->getTag() == tag)
+        l.push_back(tlv);
     }
 
-    const TlvList& getList() const { return l_; }
+    const TlvList &getList() const { return l; }
   };
 
   const TlvList findTlvList(uint16 tag) const {
     TlvList l;
     ListFinder t(l, tag);
-    std::for_each(tlvs_.list_.begin(), tlvs_.list_.end(), t);
+    std::for_each(tlvs.list.begin(), tlvs.list.end(), t);
     return t.getList();
   }
 
-  const Tlv* findTlv(uint16 tag) const {
-    TlvList::const_iterator i = std::find_if(tlvs_.list_.begin(),
-                                             tlvs_.list_.end(),
+  const Tlv *findTlv(uint16 tag) const {
+    TlvList::const_iterator i = std::find_if(tlvs.list.begin(),
+                                             tlvs.list.end(),
                                              Tlv::CompareTag(tag));
-    if(i == tlvs_.list_.end())
+    if(i == tlvs.list.end())
       return 0;
     return *i;
   }
 
   void removeTlv(uint16 tag) {
-    for(TlvList::iterator i = std::find_if(tlvs_.list_.begin(),
-                                           tlvs_.list_.end(),
+    for(TlvList::iterator i = std::find_if(tlvs.list.begin(),
+                                           tlvs.list.end(),
                                            Tlv::CompareTag(tag));
-        i != tlvs_.list_.end();
-        i = std::find_if(i, tlvs_.list_.end(), Tlv::CompareTag(tag))) {
+        i != tlvs.list.end();
+        i = std::find_if(i, tlvs.list.end(), Tlv::CompareTag(tag))) {
       TlvList::iterator j = i;
       ++j;
-      const Tlv* t = *i;
-      tlvs_.list_.erase(i);
+      const Tlv *t = *i;
+      tlvs.list.erase(i);
       updateLength(0 - (t->getLength() + 4));
       delete t;
       i = j;
@@ -170,7 +166,7 @@ protected:
   void updateLength(const int &p) { command_length += p; }
 
   void insertTlv(const Tlv *tlv) {
-    tlvs_.list_.push_back(tlv);
+    tlvs.list.push_back(tlv);
     updateLength(tlv->getLength() + 4);
   }
 

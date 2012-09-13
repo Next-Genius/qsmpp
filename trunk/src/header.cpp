@@ -19,23 +19,23 @@ Header::~Header() {
 
 void Header::insertAfterTlv(const Tlv *tlv, uint16 tag) {
   TlvList::reverse_iterator i;
-  i = std::find_if(tlvs_.list_.rbegin(),
-                   tlvs_.list_.rend(),
+  i = std::find_if(tlvs.list.rbegin(),
+                   tlvs.list.rend(),
                    Tlv::CompareTag(tag));
-//  if(i == tlvs_.list_.rend())
-//    throw Smpp::Error("Missing mandatory TLV");
-  tlvs_.list_.insert(i.base(), tlv);
+//  if(i == tlvs.list.rend())
+//    throw Error("Missing mandatory TLV");
+  tlvs.list.insert(i.base(), tlv);
   updateLength(tlv->getLength() + 4);
 }
 
 void Header::insertBeforeTlv(const Tlv *tlv, uint16 tag) {
   TlvList::iterator i;
-  i = std::find_if(tlvs_.list_.begin(),
-                   tlvs_.list_.end(),
+  i = std::find_if(tlvs.list.begin(),
+                   tlvs.list.end(),
                    Tlv::CompareTag(tag));
-  //if(i == tlvs_.list_.end())
-  //    throw Smpp::Error("Missing mandatory TLV");
-  tlvs_.list_.insert(i, tlv);
+  //if(i == tlvs.list.end())
+  //    throw Error("Missing mandatory TLV");
+  tlvs.list.insert(i, tlv);
   updateLength(tlv->getLength() + 4);
 }
 

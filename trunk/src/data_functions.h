@@ -13,31 +13,31 @@ inline bool is_big_endian() {
 inline uint32 ntoh32(const uint32 &n) {
   if (is_big_endian())
       return n;
-  return (n & 0x000000ff) << 24 |
-         (n & 0x0000ff00) << 8 |
-         (n & 0x00ff0000) >> 8 |
-         (n & 0xff000000) >> 24;
+  return (n  &0x000000ff) << 24 |
+         (n  &0x0000ff00) << 8 |
+         (n  &0x00ff0000) >> 8 |
+         (n  &0xff000000) >> 24;
 }
 
 inline uint32 hton32(const uint32 &n) {
   if (is_big_endian())
     return n;
-  return (n & 0x000000ff) << 24 |
-         (n & 0x0000ff00) << 8 |
-         (n & 0x00ff0000) >> 8 |
-         (n & 0xff000000) >> 24;
+  return (n  &0x000000ff) << 24 |
+         (n  &0x0000ff00) << 8 |
+         (n  &0x00ff0000) >> 8 |
+         (n  &0xff000000) >> 24;
 }
 
 inline uint16 ntoh16(const uint16 &n) {
   if (is_big_endian())
     return n;
-  return (n & 0x00ff) << 8 | (n & 0xff00) >> 8;
+  return (n  &0x00ff) << 8 | (n  &0xff00) >> 8;
 }
 
-inline uint16 hton16(const uint16& n) {
+inline uint16 hton16(const uint16 &n) {
   if (is_big_endian())
     return n;
-  return (n & 0x00ff) << 8 | (n & 0xff00) >> 8;
+  return (n  &0x00ff) << 8 | (n  &0xff00) >> 8;
 }
 inline uint16 ntoh16(const uint8 *b) {
   uint16 t;

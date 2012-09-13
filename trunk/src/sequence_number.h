@@ -16,7 +16,7 @@ public:
 
   static smpp::uint32 assign(const smpp::uint32 &p, bool allow_0 = false) {
     if(p > Max) return Max;
-    if (allow_0 == false && p == 0) return Min;
+    if (allow_0 == false  &&p == 0) return Min;
     return p;
   }
 

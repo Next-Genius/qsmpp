@@ -2,6 +2,7 @@
 #define SMPP_TLV_H
 
 #include <types.h>
+#include <data_functions.h>
 
 namespace smpp {
 
@@ -10,7 +11,7 @@ class Tlv {
   uint16 length;
   const uint8 *value;
 
-  uint8* buildValue(const uint16 &l, const uint8 *v) {
+  uint8 *buildValue(const uint16 &l, const uint8 *v) {
     uint8 *t(new uint8[l]);
     std::copy(v, v + l, t);
     return t;
@@ -21,7 +22,7 @@ public:
     dest_network_type            = 0x0006,
     dest_bearer_type             = 0x0007,
     dest_telematics_id           = 0x0008,
-    source_addr_subunit          = 0x000D,
+    source_addrsubunit          = 0x000D,
     source_network_type          = 0x000E,
     source_bearer_type           = 0x000F,
     source_telematics_id         = 0x0010,
@@ -115,7 +116,7 @@ public:
 
   uint16 getLength() const { return length; }
 
-  const uint8* getValue() const { return value; }
+  const uint8 *getValue() const { return value; }
 
   class CompareTag {
     const uint16 &tag;
@@ -134,6 +135,70 @@ protected:
     tag(t), length(l), value(v) {
   }
 };
+
+class BroadcastAreaIdentifier : public Tlv {
+  uint8 *allocateValue(const uint8 &format,
+                       const uint8 *details,
+                       const uint16 &length) {
+    uint8 *v(new uint8[length + 1]);
+    v[0] = format;
+    if(length)
+      std::copy(details, details + length, v + 1);
+    return v;
+  }
+  BroadcastAreaIdentifier();
+public:
+  BroadcastAreaIdentifier(const uint8 &format,
+                          const uint8 *details,
+                          const uint16 &length) :
+    Tlv(Tlv::broadcast_area_identifier,
+        length + 1,
+        allocateValue(format, details, length),
+        0) {}
+};
+
+class BroadcastContentType : public Tlv {
+  uint8 *allocateValue(const uint8 &type, const uint16 &units) {
+    uint8 *v(new uint8[3]);
+    v[0] = type;
+    uint16 t = hton16(units);
+    uint8 *tptr(reinterpret_cast<uint8 *>(&t));
+    std::memcpy(v + 1, tptr, 2);
+    return v;
+  }
+  BroadcastContentType();
+public:
+  BroadcastContentType(const uint8 &type, const uint16 &units) :
+    Tlv(Tlv::broadcast_frequency_interval, 3, allocateValue(type, units), 0) {}
+};
+
+class BroadcastFrequencyInterval : public Tlv {
+  uint8 *allocateValue(const uint8 &type, const uint16 &units) {
+    uint8 *v(new uint8[3]);
+    v[0] = type;
+    uint16 t = hton16(units);
+    uint8 *tptr(reinterpret_cast<uint8 *>(&t));
+    std::memcpy(v + 1, tptr, 2);
+    return v;
+  }
+  BroadcastFrequencyInterval();
+public:
+  BroadcastFrequencyInterval(const uint8 &type, const uint16 &units) :
+    Tlv(Tlv::broadcast_frequency_interval, 3, allocateValue(type, units), 0) {}
+};
+
+class BroadcastAreaSuccess : public Tlv {
+  uint8 *allocateValue(const uint8 &rate) {
+    uint8 *v(new uint8[1]);
+    v[0] = rate;
+    return v;
+  }
+  BroadcastAreaSuccess();
+public:
+  BroadcastAreaSuccess(const uint8 &rate) :
+      Tlv(Tlv::broadcast_area_success, 1, allocateValue(rate), 0) {}
+};
+
 
 } // namespace smpp
 

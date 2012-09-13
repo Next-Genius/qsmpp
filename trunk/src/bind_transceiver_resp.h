@@ -9,7 +9,7 @@ namespace smpp {
 class BindTransceiverResp : public Response {
   SystemId system_id;
 public:
-  const static int MinLength = 17;
+  const static int min_length = 17;
 
   BindTransceiverResp();
 
