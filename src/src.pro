@@ -104,4 +104,6 @@ SOURCES += \
     generic_nack.cpp \
     unbind.cpp \
     unbind_resp.cpp \
-    replace_sm_resp.cpp
+    replace_sm_resp.cpp \
+    encoder.cpp \
+    decoder.cpp
