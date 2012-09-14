@@ -46,6 +46,8 @@ public:
   //
 
   const MessageId &getMessageId() const { return message_id; }
+
+  const UnsuccessSmeColl &getUnsuccessSme() const { return unsuccess_sme; }
 };
 
 } // namespace smpp

@@ -40,7 +40,7 @@ public:
   // Accessing
   //
 
-  const MessageId &setMessageId() const { return message_id; }
+  const MessageId &getMessageId() const { return message_id; }
 };
 
 } // namespace smpp

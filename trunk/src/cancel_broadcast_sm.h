@@ -71,7 +71,7 @@ public:
 
   const ServiceType &getServiceType() const { return service_type; }
 
-  const MessageId &getgetMessageId() const { return message_id; }
+  const MessageId &getMessageId() const { return message_id; }
 
   const SmeAddress &getSourceAddr() const { return source_addr; }
 };
