@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class SubmitMultiResp : public Response {
+class SubmitMultiResp : public TlvsHeader {
   MessageId message_id;
   UnsuccessSmeColl unsuccess_sme;
 public:

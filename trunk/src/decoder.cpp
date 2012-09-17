@@ -2,5 +2,282 @@
 
 namespace smpp {
 
+Decoder::Decoder() :
+  data(0), pos(0), max_pos(-1), last_error(CommandStatus::ESME_ROK) {
+
+}
+
+Decoder::~Decoder() {
+
+}
+
+void Decoder::setData(const uint8 *data, const int &length) {
+  this->data = data;
+  max_pos = length - 1;
+  pos = 0;
+}
+
+void Decoder::clear() {
+  this->data = 0;
+  max_pos = -1;
+  pos = 0;
+}
+
+bool Decoder::decode(uint32 &p) {
+  const int size_of(sizeof uint32);
+  if(pos + size_of > max_pos)
+    return false;
+  memcpy(&p, &data[pos], size_of);
+  p = ntoh32(p);
+  pos += size_of;
+  return true;
+}
+
+bool Decoder::decode(uint16 &p) {
+  const int size_of(sizeof uint16);
+  if(pos + size_of > max_pos)
+    return false;
+  memcpy(&p, &data[pos], size_of);
+  p = ntoh16(p);
+  pos += size_of;
+  return true;
+}
+
+bool Decoder::decode(uint8 &p) {
+  if(pos > max_pos)
+    return false;
+  memcpy(&p, &data[pos], sizeof uint8);
+  pos++;
+  return true;
+}
+
+bool Decoder::decode(CString &p) {
+  int temp_pos(pos);
+  while(1) {
+    if(temp_pos > max_pos)
+      return false;
+    if(data[temp_pos++] == '\0')
+      break;
+  }
+  p.clear();
+  temp_pos -= pos + 1;
+  p.resize(temp_pos);
+  for(int i = 0; i < temp_pos; i++)
+    p[i] = data[pos++];
+  pos++;
+  return true;
+}
+
+bool Decoder::decode(uint8 *data, const int &length) {
+  if((pos + length) > max_pos)
+    return false;
+  memcpy(data, &data[pos], length);
+  pos += length;
+  return true;
+}
+
+bool Decoder::decode(SmeAddress &p) {
+  return true;
+}
+
+bool Decoder::decode(MultiDestinationAddresses &p) {
+  return true;
+}
+
+bool Decoder::decode(UnsuccessSmeColl &p) {
+  return true;
+}
+
+bool Decoder::decode(Header &p) {
+  bool ok(false);
+  uint32 command_length(0);
+  ok = decode(command_length);
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    return ok;
+  }
+  uint32 command_id(0);
+  ok = decode(command_id);
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    return ok;
+  }
+  uint32 command_status(0);
+  ok = decode(command_status);
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    return ok;
+  }
+  uint32 sequence_number(0);
+  ok = decode(sequence_number);
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    return ok;
+  }
+  p.setCommandLength(command_length);
+  p.setCommandId(command_id);
+  p.setCommandStatus(command_status);
+  p.setSequenceNumber(sequence_number);
+  ok = true;
+  return ok;
+}
+
+bool Decoder::decode(TlvsHeader &p) {
+  bool ok(false);
+  uint16 tag(0);
+  uint16 length(0);
+  uint8 *value(0);
+  while(pos + 1 != p.getCommandLength()) {
+    ok = decode(tag);
+    if(!ok) {
+      last_error = CommandStatus::ESME_RINVCMDLEN;
+      return ok;
+    }
+    ok = decode(length);
+    if(!ok) {
+      last_error = CommandStatus::ESME_RINVCMDLEN;
+      return ok;
+    }
+    value = new uint8[length];
+    ok = decode(value, length);
+    if(!ok) {
+      delete [] value;
+      last_error = CommandStatus::ESME_RINVCMDLEN;
+      return ok;
+    }
+    p.insertArrayTlv(tag, length, value);
+    delete [] value;
+  }
+  ok = true;
+  return ok;
+}
+
+bool Decoder::decode(BindReceiver &p) {
+  return true;
+}
+
+bool Decoder::decode(BindReceiverResp &p) {
+  return true;
+}
+
+bool Decoder::decode(BindTransmitter &p) {
+  return true;
+}
+
+bool Decoder::decode(BindTransmitterResp &p) {
+  return true;
+}
+
+bool Decoder::decode(BindTransceiver &p) {
+  return true;
+}
+
+bool Decoder::decode(BindTransceiverResp &p) {
+  return true;
+}
+
+bool Decoder::decode(BroadcastSm &p) {
+  return true;
+}
+
+bool Decoder::decode(BroadcastSmResp &p) {
+  return true;
+}
+
+bool Decoder::decode(CancelBroadcastSm &p) {
+  return true;
+}
+
+bool Decoder::decode(CancelBroadcastSmResp &p) {
+  return true;
+}
+
+bool Decoder::decode(CancelSm &p) {
+  return true;
+}
+
+bool Decoder::decode(CancelSmResp &p) {
+  return true;
+}
+
+bool Decoder::decode(DataSm &p) {
+  return true;
+}
+
+bool Decoder::decode(DataSmResp &p) {
+  return true;
+}
+
+bool Decoder::decode(DeliverSm &p) {
+  return true;
+}
+
+bool Decoder::decode(DeliverSmResp &p) {
+  return true;
+}
+
+bool Decoder::decode(EnquireLink &p) {
+  return true;
+}
+
+bool Decoder::decode(EnquireLinkResp &p) {
+  return true;
+}
+
+bool Decoder::decode(GenericNack &p) {
+  return true;
+}
+
+bool Decoder::decode(Outbind &p) {
+  return true;
+}
+
+bool Decoder::decode(QueryBroadcastSm &p) {
+  return true;
+}
+
+bool Decoder::decode(QueryBroadcastSmResp &p) {
+  return true;
+}
+
+bool Decoder::decode(QuerySm &p) {
+  return true;
+}
+
+bool Decoder::decode(QuerySmResp &p) {
+  return true;
+}
+
+bool Decoder::decode(ReplaceSm &p) {
+  return true;
+}
+
+bool Decoder::decode(ReplaceSmResp &p) {
+  return true;
+}
+
+bool Decoder::decode(SubmitMulti &p) {
+  return true;
+}
+
+bool Decoder::decode(SubmitMultiResp &p) {
+  return true;
+}
+
+bool Decoder::decode(SubmitSm &p) {
+  return true;
+}
+
+bool Decoder::decode(SubmitSmResp &p) {
+  return true;
+}
+
+bool Decoder::decode(Unbind &p) {
+  return true;
+}
+
+bool Decoder::decode(UnbindResp &p) {
+  return true;
+}
 
 } // namespace smpp

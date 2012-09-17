@@ -13,11 +13,18 @@ Header::Header(const CommandLength &command_length,
 
 }
 
-Header::~Header() {
+TlvsHeader::TlvsHeader(const CommandLength &command_length,
+                       const CommandId &command_id,
+                       const CommandStatus &command_status,
+                       const SequenceNumber &sequence_number) :
+  Header(command_length,
+         command_id,
+         command_status,
+         sequence_number) {
 
 }
 
-void Header::insertAfterTlv(const Tlv *tlv, uint16 tag) {
+void TlvsHeader::insertAfterTlv(const Tlv *tlv, uint16 tag) {
   TlvList::reverse_iterator i;
   i = std::find_if(tlvs.list.rbegin(),
                    tlvs.list.rend(),
@@ -28,7 +35,7 @@ void Header::insertAfterTlv(const Tlv *tlv, uint16 tag) {
   updateLength(tlv->getLength() + 4);
 }
 
-void Header::insertBeforeTlv(const Tlv *tlv, uint16 tag) {
+void TlvsHeader::insertBeforeTlv(const Tlv *tlv, uint16 tag) {
   TlvList::iterator i;
   i = std::find_if(tlvs.list.begin(),
                    tlvs.list.end(),
@@ -37,21 +44,6 @@ void Header::insertBeforeTlv(const Tlv *tlv, uint16 tag) {
   //    throw Error("Missing mandatory TLV");
   tlvs.list.insert(i, tlv);
   updateLength(tlv->getLength() + 4);
-}
-
-Request::Request(const CommandLength &command_length,
-                 const CommandId &command_id,
-                 const SequenceNumber &sequence_number) :
-  Header(command_length, command_id, CommandStatus::ESME_ROK, sequence_number) {
-
-}
-
-Response::Response(const CommandLength &command_length,
-                   const CommandId &command_id,
-                   const CommandStatus &command_status,
-                   const SequenceNumber &sequence_number) :
-  Header(command_length, command_id, command_status, sequence_number) {
-
 }
 
 } // namespace smpp

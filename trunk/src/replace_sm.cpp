@@ -3,9 +3,10 @@
 namespace smpp {
 
 ReplaceSm::ReplaceSm() :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::ReplaceSm),
-          SequenceNumber::Min) {
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::ReplaceSm),
+             CommandStatus(CommandStatus::ESME_ROK),
+             SequenceNumber::Min) {
 
 }
 
@@ -17,9 +18,10 @@ ReplaceSm::ReplaceSm(const SequenceNumber &sequence_number,
                      const RegisteredDelivery &registered_delivery,
                      const SmDefaultMsgId &sm_default_msg_id,
                      const ShortMessage &short_message) :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::ReplaceSm),
-          sequence_number),
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::ReplaceSm),
+             CommandStatus(CommandStatus::ESME_ROK),
+             sequence_number),
   message_id(message_id),
   source_addr(source_addr),
   schedule_delivery_time(schedule_delivery_time),

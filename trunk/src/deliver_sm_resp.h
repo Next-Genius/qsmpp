@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class DeliverSmResp : public Response {
+class DeliverSmResp : public TlvsHeader {
   MessageId message_id;
 
 public:

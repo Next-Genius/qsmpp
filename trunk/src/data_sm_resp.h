@@ -6,8 +6,8 @@
 
 namespace smpp {
 
-class DataSmResp : public Response {
-  MessageId message_id; ///< The message id.
+class DataSmResp : public TlvsHeader {
+  MessageId message_id;
 
 public:
   const static int min_length = 17;

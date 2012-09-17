@@ -3,9 +3,10 @@
 namespace smpp {
 
 CancelBroadcastSm::CancelBroadcastSm() :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::CancelBroadcastSm),
-          SequenceNumber::Min) {
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::CancelBroadcastSm),
+             CommandStatus(CommandStatus::ESME_ROK),
+             SequenceNumber::Min) {
 
 }
 
@@ -13,9 +14,10 @@ CancelBroadcastSm::CancelBroadcastSm(const SequenceNumber &sequence_number,
                                      const ServiceType &service_type,
                                      const MessageId &message_id,
                                      const SmeAddress &source_addr) :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::CancelBroadcastSm),
-          sequence_number),
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::CancelBroadcastSm),
+             CommandStatus(CommandStatus::ESME_ROK),
+             sequence_number),
   service_type(service_type),
   message_id(message_id),
   source_addr(source_addr) {

@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class BindReceiverResp : public Response {
+class BindReceiverResp : public TlvsHeader {
   SystemId system_id;
 public:
   const static int min_length = 17;

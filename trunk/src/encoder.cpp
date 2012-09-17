@@ -265,7 +265,6 @@ Encoder &Encoder::operator +=(const Outbind &p) {
   addHeader(p);
   *this += p.getSystemId();
   *this += p.getPassword();
-  addTlvs(p.getTlvList());
   return *this;
 }
 

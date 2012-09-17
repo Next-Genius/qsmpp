@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class ReplaceSm : public Request {
+class ReplaceSm : public TlvsHeader {
   MessageId message_id;
   SmeAddress source_addr;
   Time schedule_delivery_time;

@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class QueryBroadcastSmResp : public Response {
+class QueryBroadcastSmResp : public TlvsHeader {
   MessageId message_id;
   MessageState message_state;
 public:

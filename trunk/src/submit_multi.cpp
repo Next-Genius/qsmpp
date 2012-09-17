@@ -3,9 +3,10 @@
 namespace smpp {
 
 SubmitMulti::SubmitMulti() :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::SubmitMulti),
-          SequenceNumber::Min) {
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::SubmitMulti),
+             CommandStatus(CommandStatus::ESME_ROK),
+             SequenceNumber::Min) {
 
 }
 
@@ -22,9 +23,10 @@ SubmitMulti::SubmitMulti(const SequenceNumber &sequence_number,
                          const DataCoding &data_coding,
                          const SmDefaultMsgId &sm_default_msg_id,
                          const ShortMessage &short_message) :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::SubmitMulti),
-          sequence_number),
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::SubmitMulti),
+             CommandStatus(CommandStatus::ESME_ROK),
+             sequence_number),
   service_type(service_type),
   source_addr(source_addr),
   esm_class(esm_class),
@@ -36,8 +38,7 @@ SubmitMulti::SubmitMulti(const SequenceNumber &sequence_number,
   replace_if_present_flag(replace_if_present_flag),
   data_coding(data_coding),
   sm_default_msg_id(sm_default_msg_id),
-  short_message(short_message)
-{
+  short_message(short_message) {
   Header::updateLength(service_type.length() +
                        source_addr.getAddress().length() +
                        schedule_delivery_time.length() +

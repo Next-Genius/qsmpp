@@ -3,16 +3,18 @@
 namespace smpp {
 
 Unbind::Unbind() :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::Unbind),
-          SequenceNumber::Min) {
+  Header(CommandLength(min_length),
+         CommandId(CommandId::Unbind),
+         CommandStatus(CommandStatus::ESME_ROK),
+         SequenceNumber::Min) {
 
 }
 
 Unbind::Unbind(const SequenceNumber &sequence_number) :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::Unbind),
-          sequence_number) {
+  Header(CommandLength(min_length),
+         CommandId(CommandId::Unbind),
+         CommandStatus(CommandStatus::ESME_ROK),
+         sequence_number) {
 
 }
 

@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class DeliverSm : public Request {
+class DeliverSm : public TlvsHeader {
   ServiceType service_type;
   SmeAddress source_addr;
   SmeAddress destination_addr;

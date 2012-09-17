@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class QuerySmResp : public Response {
+class QuerySmResp : public Header {
   MessageId message_id;
   Time final_date;
   MessageState message_state;

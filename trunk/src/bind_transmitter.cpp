@@ -3,9 +3,10 @@
 namespace smpp {
 
 BindTransmitter::BindTransmitter() :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::BindTransmitter),
-          SequenceNumber::Min) {
+  Header(CommandLength(min_length),
+         CommandId(CommandId::BindTransmitter),
+         CommandStatus(CommandStatus::ESME_ROK),
+         SequenceNumber::Min) {
 
 }
 
@@ -17,9 +18,10 @@ BindTransmitter::BindTransmitter(const SequenceNumber &sequence_number,
                                  const Ton &addr_ton,
                                  const Npi &addr_npi,
                                  const AddressRange &address_range) :
-    Request(CommandLength(min_length),
-            CommandId(CommandId::BindTransmitter),
-            sequence_number),
+    Header(CommandLength(min_length),
+           CommandId(CommandId::BindTransmitter),
+           CommandStatus(CommandStatus::ESME_ROK),
+           sequence_number),
     system_id(system_id),
     password(password),
     system_type(system_type),

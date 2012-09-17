@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class QueryBroadcastSm : public Request {
+class QueryBroadcastSm : public TlvsHeader {
    MessageId message_id;
    SmeAddress source_addr;
  public:
