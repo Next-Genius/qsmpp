@@ -90,35 +90,34 @@ bool Decoder::decode(UnsuccessSmeColl &p) {
 
 bool Decoder::decode(Header &p) {
   bool ok(false);
-  uint32 command_length(0);
-  ok = decode(command_length);
-  if(!ok) {
+  uint32 value(0);
+  ok = decode(value);
+  if(ok) {
+    p.setCommandLength(value);
+  } else {
     last_error = CommandStatus::ESME_RINVMSGLEN;
     return ok;
   }
-  uint32 command_id(0);
-  ok = decode(command_id);
-  if(!ok) {
+  ok = decode(value);
+  if(ok) {
+    p.setCommandId(value);
+  } else {
     last_error = CommandStatus::ESME_RINVMSGLEN;
     return ok;
   }
-  uint32 command_status(0);
-  ok = decode(command_status);
-  if(!ok) {
+  ok = decode(value);
+  if(ok) {
+    p.setCommandStatus(value);
+  } else {
     last_error = CommandStatus::ESME_RINVMSGLEN;
     return ok;
   }
-  uint32 sequence_number(0);
-  ok = decode(sequence_number);
-  if(!ok) {
+  ok = decode(value);
+  if(ok) {
+    p.setSequenceNumber(value);
+  } else {
     last_error = CommandStatus::ESME_RINVMSGLEN;
-    return ok;
   }
-  p.setCommandLength(command_length);
-  p.setCommandId(command_id);
-  p.setCommandStatus(command_status);
-  p.setSequenceNumber(sequence_number);
-  ok = true;
   return ok;
 }
 
@@ -153,27 +152,246 @@ bool Decoder::decode(TlvsHeader &p) {
 }
 
 bool Decoder::decode(BindReceiver &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setSystemId(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setPassword(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setSystemType(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  uint8 value;
+  ok = decode(value);
+  if(ok) {
+    p.setInterfaceVersion(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setAddrTon(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setAddrNpi(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setAddressRange(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  }
+  return ok;
 }
 
 bool Decoder::decode(BindReceiverResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SystemId system_id;
+  ok = decode(system_id);
+  if(ok) {
+    p.setSystemId(system_id);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(BindTransmitter &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setSystemId(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setPassword(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setSystemType(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  uint8 value;
+  ok = decode(value);
+  if(ok) {
+    p.setInterfaceVersion(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setAddrTon(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setAddrNpi(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setAddressRange(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  }
+  return ok;
 }
 
 bool Decoder::decode(BindTransmitterResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SystemId system_id;
+  ok = decode(system_id);
+  if(ok) {
+    p.setSystemId(system_id);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(BindTransceiver &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setSystemId(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setPassword(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setSystemType(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  uint8 value(0);
+  ok = decode(value);
+  if(ok) {
+    p.setInterfaceVersion(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setAddrTon(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setAddrNpi(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setAddressRange(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  }
+  return ok;
 }
 
 bool Decoder::decode(BindTransceiverResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SystemId system_id;
+  ok = decode(system_id);
+  if(ok) {
+    p.setSystemId(system_id);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(BroadcastSm &p) {
@@ -217,15 +435,27 @@ bool Decoder::decode(DeliverSmResp &p) {
 }
 
 bool Decoder::decode(EnquireLink &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(EnquireLinkResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(GenericNack &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(Outbind &p) {
@@ -273,11 +503,19 @@ bool Decoder::decode(SubmitSmResp &p) {
 }
 
 bool Decoder::decode(Unbind &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(UnbindResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 } // namespace smpp
