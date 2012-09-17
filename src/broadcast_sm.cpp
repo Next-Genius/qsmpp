@@ -3,9 +3,10 @@
 namespace smpp {
 
 BroadcastSm::BroadcastSm() :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::BroadcastSm),
-          SequenceNumber::Min) {
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::BroadcastSm),
+             CommandStatus(CommandStatus::ESME_ROK),
+             SequenceNumber::Min) {
 
 }
 
@@ -19,9 +20,10 @@ BroadcastSm::BroadcastSm(const SequenceNumber &sequence_number,
                          const ReplaceIfPresentFlag &replace_if_present_flag,
                          const DataCoding &data_coding,
                          const SmDefaultMsgId &sm_default_msg_id) :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::BroadcastSm),
-          sequence_number),
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::BroadcastSm),
+             CommandStatus(CommandStatus::ESME_ROK),
+             sequence_number),
   service_type(service_type),
   source_addr(source_addr),
   message_id(message_id),

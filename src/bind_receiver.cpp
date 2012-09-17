@@ -3,9 +3,10 @@
 namespace smpp {
 
 BindReceiver::BindReceiver() :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::BindReceiver),
-          SequenceNumber::Min) {
+  Header(CommandLength(min_length),
+         CommandId(CommandId::BindReceiver),
+         CommandStatus(CommandStatus::ESME_ROK),
+         SequenceNumber::Min) {
 
 }
 
@@ -17,9 +18,10 @@ BindReceiver::BindReceiver(const SequenceNumber &sequence_number,
                            const Ton &addr_ton,
                            const Npi &addr_npi,
                            const AddressRange &address_range) :
-    Request(CommandLength(min_length),
-            CommandId(CommandId::BindReceiver),
-            sequence_number),
+    Header(CommandLength(min_length),
+           CommandId(CommandId::BindReceiver),
+           CommandStatus(CommandStatus::ESME_ROK),
+           sequence_number),
     system_id(system_id),
     password(password),
     system_type(system_type),

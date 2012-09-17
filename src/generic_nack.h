@@ -5,7 +5,7 @@
 
 namespace smpp {
 
-class GenericNack : public Response {
+class GenericNack : public Header {
 public:
   const static int min_length = 16;
 

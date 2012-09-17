@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class Outbind : public Request {
+class Outbind : public Header {
   SystemId system_id;
   Password password;
 public:

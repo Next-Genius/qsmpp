@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class CancelSm : public Request {
+class CancelSm : public Header {
     ServiceType service_type;
     MessageId message_id;
     SmeAddress source_addr;

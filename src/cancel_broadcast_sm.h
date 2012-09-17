@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class CancelBroadcastSm : public Request {
+class CancelBroadcastSm : public TlvsHeader {
   ServiceType service_type;
   MessageId message_id;
   SmeAddress source_addr;

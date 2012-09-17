@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class QuerySm : public Request {
+class QuerySm : public Header {
   MessageId message_id;
   SmeAddress source_addr;
 

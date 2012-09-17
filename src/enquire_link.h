@@ -5,7 +5,7 @@
 
 namespace smpp {
 
-class EnquireLink : public Request {
+class EnquireLink : public Header {
 public:
   const static int min_length = 16;
 

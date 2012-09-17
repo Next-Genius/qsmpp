@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class SubmitMulti : public Request {
+class SubmitMulti : public TlvsHeader {
   ServiceType service_type;
   SmeAddress source_addr;
   MultiDestinationAddresses destination_addr;

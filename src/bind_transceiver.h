@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class BindTransceiver : public Request {
+class BindTransceiver : public Header {
   SystemId system_id;
   Password password;
   SystemType system_type;

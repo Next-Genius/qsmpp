@@ -3,9 +3,10 @@
 namespace smpp {
 
 DataSm::DataSm() :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::DataSm),
-          SequenceNumber::Min) {
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::DataSm),
+             CommandStatus(CommandStatus::ESME_ROK),
+             SequenceNumber::Min) {
 
 }
 
@@ -16,9 +17,10 @@ DataSm::DataSm(const SequenceNumber &sequence_number,
                const EsmClass &esm_class,
                const RegisteredDelivery &registered_delivery,
                const DataCoding &data_coding) :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::DataSm),
-          sequence_number),
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::DataSm),
+             CommandStatus(CommandStatus::ESME_ROK),
+             sequence_number),
   service_type(service_type),
   source_addr(source_addr),
   destination_addr(destination_addr),

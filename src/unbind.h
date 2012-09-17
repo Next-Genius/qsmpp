@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class Unbind : public Request {
+class Unbind : public Header {
 public:
   const static int min_length = 16;
 

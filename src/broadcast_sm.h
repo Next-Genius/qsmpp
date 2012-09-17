@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class BroadcastSm : public Request {
+class BroadcastSm : public TlvsHeader {
   ServiceType service_type;
   SmeAddress source_addr;
   MessageId message_id;

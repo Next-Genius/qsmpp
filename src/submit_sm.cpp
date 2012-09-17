@@ -3,9 +3,10 @@
 namespace smpp {
 
 SubmitSm::SubmitSm() :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::SubmitSm),
-          SequenceNumber::Min) {
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::SubmitSm),
+             CommandStatus(CommandStatus::ESME_ROK),
+             SequenceNumber::Min) {
 
 }
 
@@ -23,9 +24,10 @@ SubmitSm::SubmitSm(const SequenceNumber &sequence_number,
                    const DataCoding &data_coding,
                    const SmDefaultMsgId &sm_default_msg_id,
                    const ShortMessage &short_message) :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::SubmitSm),
-          sequence_number),
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::SubmitSm),
+             CommandStatus(CommandStatus::ESME_ROK),
+             sequence_number),
   service_type(service_type),
   source_addr(source_addr),
   destination_addr(destination_addr),

@@ -7,7 +7,7 @@ namespace smpp {
 
 class CommandStatus {
   CommandStatus();
-  smpp::uint32 value;
+  uint32 value;
 public:
   enum {
     ESME_ROK = 0x00000000,

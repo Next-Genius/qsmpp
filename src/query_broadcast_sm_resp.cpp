@@ -3,10 +3,10 @@
 namespace smpp {
 
 QueryBroadcastSmResp::QueryBroadcastSmResp() :
-  Response(CommandLength(min_length),
-           CommandId(CommandId::QueryBroadcastSmResp),
-           CommandStatus(CommandStatus::ESME_ROK),
-           SequenceNumber::Min) {
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::QueryBroadcastSmResp),
+             CommandStatus(CommandStatus::ESME_ROK),
+             SequenceNumber::Min) {
 
 }
 
@@ -14,10 +14,10 @@ QueryBroadcastSmResp::QueryBroadcastSmResp(const CommandStatus &command_status,
                                            const SequenceNumber &sequence_number,
                                            const MessageId &message_id,
                                            const MessageState &message_state) :
-  Response(CommandLength(min_length),
-           CommandId(CommandId::QueryBroadcastSmResp),
-           command_status,
-           sequence_number),
+  TlvsHeader(CommandLength(min_length),
+             CommandId(CommandId::QueryBroadcastSmResp),
+             command_status,
+             sequence_number),
   message_id(message_id),
   message_state(message_state) {
     Header::updateLength(message_id.length());

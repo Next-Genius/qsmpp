@@ -6,7 +6,7 @@
 
 namespace smpp {
 
-class UnbindResp : public Response {
+class UnbindResp : public Header {
 public:
 
   const static int min_length = 16;

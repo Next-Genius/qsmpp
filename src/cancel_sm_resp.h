@@ -5,7 +5,7 @@
 
 namespace smpp {
 
-class CancelSmResp : public Response {
+class CancelSmResp : public Header {
 public:
   const static int min_length = 16;
 

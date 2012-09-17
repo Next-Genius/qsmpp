@@ -3,16 +3,18 @@
 namespace smpp {
 
 EnquireLink::EnquireLink() :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::EnquireLink),
-          SequenceNumber::Min) {
+  Header(CommandLength(min_length),
+         CommandId(CommandId::EnquireLink),
+         CommandStatus(CommandStatus::ESME_ROK),
+         SequenceNumber::Min) {
 
 }
 
 EnquireLink::EnquireLink(const SequenceNumber &sequence_number) :
-  Request(CommandLength(min_length),
-          CommandId(CommandId::EnquireLink),
-          sequence_number) {
+  Header(CommandLength(min_length),
+         CommandId(CommandId::EnquireLink),
+         CommandStatus(CommandStatus::ESME_ROK),
+         sequence_number) {
 
 }
 

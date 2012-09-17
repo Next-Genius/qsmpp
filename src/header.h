@@ -18,6 +18,40 @@ class Header {
   CommandId command_id;
   CommandStatus command_status;
   SequenceNumber sequence_number;
+  Header();
+
+public:
+  Header(const CommandLength &command_length,
+         const CommandId &command_id,
+         const CommandStatus &command_status,
+         const SequenceNumber &sequence_number);
+
+  ~Header() {}
+
+  uint32 getCommandLength() const { return command_length; }
+
+  uint32 getCommandId() const { return command_id; }
+
+  uint32 getSequenceNumber() const { return sequence_number; }
+
+  uint32 getCommandStatus() const{ return command_status; }
+
+  void setCommandLength(const uint32 &p) { command_length = p; }
+
+  void setCommandId(const uint32 &p) { command_id = p; }
+
+  void setCommandStatus(const uint32 &p) { command_status = p; }
+
+  void setSequenceNumber(const uint32 &p, bool allow_0 = false) {
+    sequence_number = SequenceNumber(p, allow_0);
+  }
+
+protected:
+
+  void updateLength(const int &p) { command_length += p; }
+};
+
+class TlvsHeader : public Header {
   struct CTlvList {
     struct Delete {
       void operator()(const Tlv *tlv) { delete tlv; }
@@ -50,25 +84,12 @@ class Header {
       return *this;
     }
   } tlvs;
-  Header();
 
 public:
-  virtual ~Header();
-
-
-  uint32 getCommandLength() const { return command_length; }
-
-  uint32 getCommandId() const { return command_id; }
-
-  uint32 getSequenceNumber() const { return sequence_number; }
-
-  virtual uint32 getCommandStatus() const = 0;
-
-  void setSequenceNumber(const uint32 &p, bool allow_0 = false) {
-    sequence_number = SequenceNumber(p, allow_0);
-  }
-
-  virtual void setCommandStatus(const CommandStatus &command_status) = 0;
+  TlvsHeader(const CommandLength &command_length,
+             const CommandId &command_id,
+             const CommandStatus &command_status,
+             const SequenceNumber &sequence_number);
 
   void insertTlv(const Tlv &tlv) {
     insertTlv(new Tlv(tlv));
@@ -148,23 +169,6 @@ public:
   }
 
 protected:
-  Header(const CommandLength &command_length,
-         const CommandId &command_id,
-         const CommandStatus &command_status,
-         const SequenceNumber &sequence_number);
-
-  const CommandStatus &getCommandStatusP() const {
-    return command_status;
-  }
-
-  void setCommandStatusP(const CommandStatus &p) {
-    command_status = p;
-  }
-
-  void setCommandLength(const uint32 &p) { command_length = p; }
-
-  void updateLength(const int &p) { command_length += p; }
-
   void insertTlv(const Tlv *tlv) {
     tlvs.list.push_back(tlv);
     updateLength(tlv->getLength() + 4);
@@ -173,32 +177,6 @@ protected:
   void insertAfterTlv(const Tlv *tlv, smpp::uint16 tag);
 
   void insertBeforeTlv(const Tlv *tlv, smpp::uint16 tag);
-};
-
-class Request : public Header {
-  void setCommandStatus(const uint32 &command_status) {}
-public:
-  uint32 getCommandStatus() const { return Header::getCommandStatusP(); }
-protected:
-  Request(const CommandLength &command_length,
-          const CommandId &command_id,
-          const SequenceNumber &sequence_number);
-};
-
-class Response : public Header {
-public:
-  void setCommandStatus(const uint32 &p) {
-    Header::setCommandStatus(p);
-  }
-
-  uint32 getCommandStatus() const {
-    return Header::getCommandStatusP();
-  }
-protected:
-  Response(const CommandLength &command_length,
-           const CommandId &command_id,
-           const CommandStatus &command_status,
-           const SequenceNumber &sequence_number);
 };
 
 } // namespace smpp
