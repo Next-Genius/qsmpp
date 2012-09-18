@@ -218,12 +218,17 @@ class UnsuccessSme {
   SmeAddress sme_sddress;
   uint32 error;
 public:
+  UnsuccessSme() : error(0) {}
 
   UnsuccessSme(const SmeAddress &p, const uint32 &error) :
     sme_sddress(p), error(error) {}
 
   UnsuccessSme(const UnsuccessSme &p) :
     sme_sddress(p.sme_sddress), error(p.error) {}
+
+  void setSmeAddress(const SmeAddress &p) { sme_sddress = p; }
+
+  void setError(const uint32 &p) { error = p; }
 
   const SmeAddress &getSmeAddress() const { return sme_sddress; }
 
