@@ -77,7 +77,49 @@ bool Decoder::decode(uint8 *data, const int &length) {
 }
 
 bool Decoder::decode(SmeAddress &p) {
-  return true;
+  bool ok(false);
+  uint8 ton(0);
+  ok = decode(ton);
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    return ok;
+  }
+  uint8 npi(0);
+  ok = decode(npi);
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    return ok;
+  }
+  Address address;
+  ok = decode(address);
+  if(ok) {
+    SmeAddress sme_address(Ton(ton), Npi(npi), address);
+    p = sme_address;
+  } else {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+  }
+  return ok;
+}
+
+bool Decoder::decode(UnsuccessSme &p) {
+  bool ok(false);
+  SmeAddress sme_address;
+  ok = decode(sme_address);
+  if(ok) {
+    p.setSmeAddress(sme_address);
+  } else {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    return ok;
+  }
+  uint32 error(0);
+  ok = decode(error);
+  if(ok) {
+    p.setError(error);
+  } else {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    return ok;
+  }
+  return ok;
 }
 
 bool Decoder::decode(MultiDestinationAddresses &p) {
@@ -395,35 +437,272 @@ bool Decoder::decode(BindTransceiverResp &p) {
 }
 
 bool Decoder::decode(BroadcastSm &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setServiceType(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SmeAddress source_addr;
+  ok = decode(source_addr);
+  if(ok) {
+    p.setSourceAddr(source_addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setMessageId(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  uint8 value(0);
+  ok = decode(value);
+  if(ok) {
+    p.setPriorityFlag(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setScheduleDeliveryTime(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setValidityPeriod(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setReplaceIfPresentFlag(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setDataCoding(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setSmDefaultMsgId(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(BroadcastSmResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  MessageId message_id;
+  ok = decode(message_id);
+  if(ok) {
+    p.setMessageId(message_id);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(CancelBroadcastSm &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setServiceType(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setMessageId(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SmeAddress source_addr;
+  ok = decode(source_addr);
+  if(ok) {
+    p.setSourceAddr(source_addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(CancelBroadcastSmResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(CancelSm &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setServiceType(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setMessageId(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SmeAddress addr;
+  ok = decode(addr);
+  if(ok) {
+    p.setSourceAddr(addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(addr);
+  if(ok) {
+    p.setDestinationAddr(addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  }
+  return ok;
 }
 
 bool Decoder::decode(CancelSmResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(DataSm &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setServiceType(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SmeAddress addr;
+  ok = decode(addr);
+  if(ok) {
+    p.setSourceAddr(addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(addr);
+  if(ok) {
+    p.setDestinationAddr(addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  }
+  uint8 value(0);
+  ok = decode(value);
+  if(ok) {
+    p.setEsmClass(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setRegisteredDelivery(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setDataCoding(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(DataSmResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  MessageId message_id;
+  ok = decode(message_id);
+  if(ok) {
+    p.setMessageId(message_id);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(DeliverSm &p) {
@@ -431,7 +710,24 @@ bool Decoder::decode(DeliverSm &p) {
 }
 
 bool Decoder::decode(DeliverSmResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  MessageId message_id;
+  ok = decode(message_id);
+  if(ok) {
+    p.setMessageId(message_id);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(EnquireLink &p) {
@@ -459,19 +755,106 @@ bool Decoder::decode(GenericNack &p) {
 }
 
 bool Decoder::decode(Outbind &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setSystemId(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setPassword(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  }
+  return ok;
 }
 
 bool Decoder::decode(QueryBroadcastSm &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  MessageId message_id;
+  ok = decode(message_id);
+  if(ok) {
+    p.setMessageId(message_id);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SmeAddress source_addr;
+  ok = decode(source_addr);
+  if(ok) {
+    p.setSourceAddr(source_addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(QueryBroadcastSmResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  MessageId message_id;
+  ok = decode(message_id);
+  if(ok) {
+    p.setMessageId(message_id);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(QuerySm &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  MessageId message_id;
+  ok = decode(message_id);
+  if(ok) {
+    p.setMessageId(message_id);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SmeAddress source_addr;
+  ok = decode(source_addr);
+  if(ok) {
+    p.setSourceAddr(source_addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(QuerySmResp &p) {
@@ -491,7 +874,32 @@ bool Decoder::decode(SubmitMulti &p) {
 }
 
 bool Decoder::decode(SubmitMultiResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  MessageId message_id;
+  ok = decode(message_id);
+  if(ok) {
+    p.setMessageId(message_id);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  UnsuccessSme unsuccess_sme;
+  ok = decode(unsuccess_sme);
+  if(ok) {
+    p.setUnsuccessSme(unsuccess_sme);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(SubmitSm &p) {
@@ -499,7 +907,24 @@ bool Decoder::decode(SubmitSm &p) {
 }
 
 bool Decoder::decode(SubmitSmResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  MessageId message_id;
+  ok = decode(message_id);
+  if(ok) {
+    p.setMessageId(message_id);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(Unbind &p) {

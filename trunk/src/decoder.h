@@ -65,6 +65,8 @@ public:
 
   bool decode(MultiDestinationAddresses &p);
 
+  bool decode(UnsuccessSme &p);
+
   bool decode(UnsuccessSmeColl &p);
 
   bool decode(Header &p);
