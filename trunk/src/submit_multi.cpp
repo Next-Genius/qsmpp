@@ -13,6 +13,7 @@ SubmitMulti::SubmitMulti() :
 SubmitMulti::SubmitMulti(const SequenceNumber &sequence_number,
                          const ServiceType &service_type,
                          const SmeAddress &source_addr,
+                         const MultiDestinationAddresses &destination_addr,
                          const EsmClass &esm_class,
                          const ProtocolId &protocol_id,
                          const PriorityFlag &priority_flag,
@@ -29,6 +30,7 @@ SubmitMulti::SubmitMulti(const SequenceNumber &sequence_number,
              sequence_number),
   service_type(service_type),
   source_addr(source_addr),
+  destination_addr(destination_addr),
   esm_class(esm_class),
   protocol_id(protocol_id),
   priority_flag(priority_flag),
@@ -41,6 +43,7 @@ SubmitMulti::SubmitMulti(const SequenceNumber &sequence_number,
   short_message(short_message) {
   Header::updateLength(service_type.length() +
                        source_addr.getAddress().length() +
+                       destination_addr.length() +
                        schedule_delivery_time.length() +
                        validity_period.length() +
                        short_message.length());

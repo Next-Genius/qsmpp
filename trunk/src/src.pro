@@ -1,9 +1,11 @@
 TEMPLATE = lib
 
 QT -= gui
-QT += core network
+QT -= core
 
 #VERSION = 1.0.0
+
+CONFIG += staticlib
 
 CONFIG(debug, debug|release) {
   TARGET = qsmppd
