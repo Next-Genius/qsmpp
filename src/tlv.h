@@ -133,6 +133,7 @@ protected:
       const uint8 *v,
       int x) :
     tag(t), length(l), value(v) {
+    x = 0;
   }
 };
 

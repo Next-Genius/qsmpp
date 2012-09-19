@@ -123,6 +123,7 @@ bool Decoder::decode(UnsuccessSme &p) {
 }
 
 bool Decoder::decode(MultiDestinationAddresses &p) {
+  //p.add()
   return true;
 }
 
@@ -706,7 +707,117 @@ bool Decoder::decode(DataSmResp &p) {
 }
 
 bool Decoder::decode(DeliverSm &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setServiceType(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SmeAddress addr;
+  ok = decode(addr);
+  if(ok) {
+    p.setSourceAddr(addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(addr);
+  if(ok) {
+    p.setDestinationAddr(addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  }
+  uint8 value(0);
+  ok = decode(value);
+  if(ok) {
+    p.setEsmClass(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setProtocolId(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setPriorityFlag(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setScheduleDeliveryTime(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setValidityPeriod(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setRegisteredDelivery(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setReplaceIfPresentFlag(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setDataCoding(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setSmDefaultMsgId(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    return ok;
+  }
+  uint8 *data = new uint8[value];
+  ok = decode(data, value);
+  if(ok) {
+    p.setShortMessage(data, value);
+    delete [] data;
+  } else {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    delete [] data;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(DeliverSmResp &p) {
@@ -858,19 +969,233 @@ bool Decoder::decode(QuerySm &p) {
 }
 
 bool Decoder::decode(QuerySmResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setMessageId(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setFinalDate(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  uint8 value(0);
+  ok = decode(value);
+  if(ok) {
+    p.setMessageState(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setMessageState(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  return ok;
 }
 
 bool Decoder::decode(ReplaceSm &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setMessageId(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SmeAddress addr;
+  ok = decode(addr);
+  if(ok) {
+    p.setSourceAddr(addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setScheduleDeliveryTime(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setValidityPeriod(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  uint8 value(0);
+  ok = decode(value);
+  if(ok) {
+    p.setRegisteredDelivery(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setSmDefaultMsgId(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    return ok;
+  }
+  uint8 *data = new uint8[value];
+  ok = decode(data, value);
+  if(ok) {
+    p.setShortMessage(data, value);
+    delete [] data;
+  } else {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    delete [] data;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(ReplaceSmResp &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(SubmitMulti &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setServiceType(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SmeAddress addr;
+  ok = decode(addr);
+  if(ok) {
+    p.setSourceAddr(addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  uint8 value(0);
+  ok = decode(value);
+  if(ok) {
+    p.setEsmClass(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setProtocolId(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setPriorityFlag(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setScheduleDeliveryTime(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setValidityPeriod(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setRegisteredDelivery(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setReplaceIfPresentFlag(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setDataCoding(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setSmDefaultMsgId(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    return ok;
+  }
+  uint8 *data = new uint8[value];
+  ok = decode(data, value);
+  if(ok) {
+    p.setShortMessage(data, value);
+    delete [] data;
+  } else {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    delete [] data;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
+
 }
 
 bool Decoder::decode(SubmitMultiResp &p) {
@@ -903,7 +1228,117 @@ bool Decoder::decode(SubmitMultiResp &p) {
 }
 
 bool Decoder::decode(SubmitSm &p) {
-  return true;
+  bool ok(false);
+  ok = decode(*reinterpret_cast<Header *>(&p));
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  CString c_string;
+  ok = decode(c_string);
+  if(ok) {
+    p.setServiceType(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  SmeAddress addr;
+  ok = decode(addr);
+  if(ok) {
+    p.setSourceAddr(addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(addr);
+  if(ok) {
+    p.setDestinationAddr(addr);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  }
+  uint8 value(0);
+  ok = decode(value);
+  if(ok) {
+    p.setEsmClass(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setProtocolId(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setPriorityFlag(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setScheduleDeliveryTime(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(c_string);
+  if(ok) {
+    p.setValidityPeriod(c_string.data());
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setRegisteredDelivery(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setReplaceIfPresentFlag(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setDataCoding(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(ok) {
+    p.setSmDefaultMsgId(value);
+  } else {
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+    return ok;
+  }
+  ok = decode(value);
+  if(!ok) {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    return ok;
+  }
+  uint8 *data = new uint8[value];
+  ok = decode(data, value);
+  if(ok) {
+    p.setShortMessage(data, value);
+    delete [] data;
+  } else {
+    last_error = CommandStatus::ESME_RINVMSGLEN;
+    delete [] data;
+    return ok;
+  }
+  ok = decode(*reinterpret_cast<TlvsHeader *>(&p));
+  if(!ok)
+    last_error = CommandStatus::ESME_RINVCMDLEN;
+  return ok;
 }
 
 bool Decoder::decode(SubmitSmResp &p) {

@@ -175,17 +175,15 @@ public:
 
 class MultiDestinationAddresses {
   typedef std::list<MultiDestinationAddressBase *> List;
-private:
   List addrs;
-
+  int len;
   struct Delete {
-      void operator()(const MultiDestinationAddressBase *p) {
-          delete p;
-      }
+    void operator() (const MultiDestinationAddressBase *p) {
+      delete p;
+    }
   };
-
 public:
-  MultiDestinationAddresses() {}
+  MultiDestinationAddresses() : len(0) {}
 
   ~MultiDestinationAddresses() throw() {
     std::for_each(addrs.begin(), addrs.end(), Delete());
@@ -195,7 +193,9 @@ public:
     if(addrs.size() < 255) {
       MultiDestinationAddressBase *t = new SmeMultiAddress(p);
       addrs.push_back(t);
-      return p.length() + 1;
+      int l(p.length() + 1);
+      len += l;
+      return l;
     }
     return 0;
   }
@@ -204,12 +204,16 @@ public:
     if(addrs.size() < 255) {
       MultiDestinationAddressBase *t = new DistributionListAddress(p);
       addrs.push_back(t);
-      return p.length() + 2;
+      int l(p.length() + 2);
+      len += l;
+      return l;
     }
     return 0;
   }
 
   uint8 size() const { return addrs.size(); }
+
+  int length() const { return len; }
 
   const List &getList() const { return addrs; }
 };

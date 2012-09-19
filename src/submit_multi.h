@@ -30,6 +30,7 @@ public:
   SubmitMulti(const SequenceNumber &sequence_number,
               const ServiceType &service_type,
               const SmeAddress &source_addr,
+              const MultiDestinationAddresses &destination_addr,
               const EsmClass &esm_class,
               const ProtocolId &protocol_id,
               const PriorityFlag &priority_flag,

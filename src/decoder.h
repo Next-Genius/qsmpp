@@ -59,6 +59,8 @@ public:
 
   bool decode(CString &p);
 
+  bool decode(ShortMessage &p);
+
   bool decode(uint8 *data, const int &length);
 
   bool decode(SmeAddress &p);
