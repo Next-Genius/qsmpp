@@ -22,7 +22,7 @@ public:
     dest_network_type            = 0x0006,
     dest_bearer_type             = 0x0007,
     dest_telematics_id           = 0x0008,
-    source_addrsubunit          = 0x000D,
+    source_addrsubunit           = 0x000D,
     source_network_type          = 0x000E,
     source_bearer_type           = 0x000F,
     source_telematics_id         = 0x0010,

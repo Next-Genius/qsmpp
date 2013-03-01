@@ -35,79 +35,45 @@ public:
   // Mutating
   //
 
-  void setSystemId(const SystemId &p) {
-    int diff = p.length() - system_id.length();
-    system_id = p;
-    Header::updateLength(diff);
-  }
+  void setSystemId(const SystemId &p);
 
-  void setSystemId(const char *p) {
-    int diff = strlen(p) - system_id.length();
-    system_id = p;
-    Header::updateLength(diff);
-  }
+  void setSystemId(const char *p);
 
-  void setPassword(const Password &p) {
-    int diff = p.length() - password.length();
-    password = p;
-    Header::updateLength(diff);
-  }
+  void setPassword(const Password &p);
 
-  void setPassword(const char *p) {
-    int diff = strlen(p) - password.length();
-    password = p;
-    Header::updateLength(diff);
-  }
+  void setPassword(const char *p);
 
-  void setSystemType(const SystemType &p) {
-    int diff = p.length() - system_type.length();
-    system_type = p;
-    Header::updateLength(diff);
-  }
+  void setSystemType(const SystemType &p);
 
-  void setSystemType(const char *p) {
-    int diff = strlen(p) - system_type.length();
-    system_type = p;
-    Header::updateLength(diff);
-  }
+  void setSystemType(const char *p);
 
-  void setInterfaceVersion(const int &p) { interface_version = p; }
+  void setInterfaceVersion(const int &p);
 
-  void setAddrTon(const int &p) { addr_ton = p; }
+  void setAddrTon(const int &p);
 
-  void setAddrNpi(const int &p) { addr_npi = p; }
+  void setAddrNpi(const int &p);
 
-  void setAddressRange(const AddressRange &p) {
-    int diff = p.length() - address_range.length();
-    address_range = p;
-    Header::updateLength(diff);
-  }
+  void setAddressRange(const AddressRange &p);
 
-  void setAddressRange(const char *p) {
-    int diff = strlen(p) - address_range.length();
-    address_range = p;
-    Header::updateLength(diff);
-  }
+  void setAddressRange(const char *p);
 
   //
   // Accessing
   //
 
-  const SystemId &getSystemId() const { return system_id; }
+  const SystemId &getSystemId() const;
 
-  const Password &getPassword() const { return password; }
+  const Password &getPassword() const;
 
-  const SystemType &getSystemType() const { return system_type; }
+  const SystemType &getSystemType() const;
 
-  const InterfaceVersion &getInterfaceVersion() const {
-    return interface_version;
-  }
+  const InterfaceVersion &getInterfaceVersion() const;
 
-  const Ton &getAddrTon() const { return addr_ton; }
+  const Ton &getAddrTon() const;
 
-  const Npi &getAddrNpi() const { return addr_npi; }
+  const Npi &getAddrNpi() const;
 
-  const AddressRange &getAddressRange() const { return address_range; }
+  const AddressRange &getAddressRange() const;
 };
 
 } // namespace smpp

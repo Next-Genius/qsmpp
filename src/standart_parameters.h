@@ -37,9 +37,9 @@ class InterfaceVersion {
   uint8 value;
 public:
   enum {
-    V33 = 0x33, ///< Version 3.3
-    V34 = 0x34, ///< Version 3.4
-    V50 = 0x50  ///< Version 5.0
+    V33 = 0x33, // Version 3.3
+    V34 = 0x34, // Version 3.4
+    V50 = 0x50  // Version 5.0
   };
 
   InterfaceVersion() : value(V50) {}
@@ -76,13 +76,13 @@ class Ton {
   uint8 value;
 public:
   enum {
-    Unknown       = 0x00, ///< Unknown (default)
-    International = 0x01, ///< International
-    National      = 0x02, ///< National
-    Network       = 0x03, ///< Network
-    Subscriber    = 0x04, ///< Subscriber
-    Alphanumeric  = 0x05, ///< Alphanumeric
-    Abbreviated   = 0x06  ///< Abbreviated
+    Unknown       = 0x00, // Unknown (default)
+    International = 0x01, // International
+    National      = 0x02, // National
+    Network       = 0x03, // Network
+    Subscriber    = 0x04, // Subscriber
+    Alphanumeric  = 0x05, // Alphanumeric
+    Abbreviated   = 0x06  // Abbreviated
   };
 
   Ton() : value(Unknown) {}
@@ -97,16 +97,16 @@ class Npi {
   uint8 value;
 public:
   enum {
-    Unknown  = 0x00, ///< Unknown
-    E164     = 0x01, ///< E164
-    Data     = 0x03, ///< Data
-    Telex    = 0x04, ///< Telex
-    Mobile   = 0x06, ///< Mobile
-    National = 0x08, ///< National
-    Private  = 0x09, ///< Private
-    Ermes    = 0x0a, ///< ERMES
-    Internet = 0x0e, ///< Internet
-    Wap      = 0x12  ///< WAP
+    Unknown  = 0x00, // Unknown
+    E164     = 0x01, // E164
+    Data     = 0x03, // Data
+    Telex    = 0x04, // Telex
+    Mobile   = 0x06, // Mobile
+    National = 0x08, // National
+    Private  = 0x09, // Private
+    Ermes    = 0x0a, // ERMES
+    Internet = 0x0e, // Internet
+    Wap      = 0x12  // WAP
   };
 
   Npi() : value(Unknown) {}
@@ -118,8 +118,8 @@ public:
 class Address : public CString {
 public:
   enum {
-    MaxLen = 21,   ///< Normal address length
-    MaxDataSmLen = 65 ///< Extended address lenth - data_sm
+    MaxLen = 21,      // Normal address length
+    MaxDataSmLen = 65 // Extended address lenth - data_sm
   };
   Address &operator =(const char *p) {
     CString::operator =(p);
