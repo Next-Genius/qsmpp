@@ -24,13 +24,13 @@ void Encoder::reset(const uint32 &length) {
 }
 
 Encoder &Encoder::operator +=(const uint32 &p) {
-  ::memcpy(&data[offset], &p, sizeof p);
+  std::memcpy(&data[offset], &p, sizeof p);
   offset += sizeof p;
   return *this;
 }
 
 Encoder &Encoder::operator +=(const uint16 &p) {
-  ::memcpy(&data[offset], &p, sizeof p);
+  std::memcpy(&data[offset], &p, sizeof p);
   offset += sizeof p;
   return *this;
 }
